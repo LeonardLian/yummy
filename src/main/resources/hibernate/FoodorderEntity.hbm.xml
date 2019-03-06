@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.javaee.entity.FoodorderEntity" table="foodorder" schema="yummy">
+        <id name="orderid" column="orderid"/>
+        <property name="userid" column="userid"/>
+        <property name="restCode" column="restCode"/>
+        <property name="useraddress" column="useraddress"/>
+        <property name="packageids" column="packageids"/>
+        <property name="packagenums" column="packagenums"/>
+        <property name="foodCodes" column="foodCodes"/>
+        <property name="foodNums" column="foodNums"/>
+        <property name="totalprice" column="totalprice"/>
+    </class>
+</hibernate-mapping>
