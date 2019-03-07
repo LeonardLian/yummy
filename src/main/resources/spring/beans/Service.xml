@@ -6,6 +6,17 @@
     <bean id="userService" class="com.javaee.service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao" />
         <property name="foodorderDao" ref="foodorderDao" />
-
+        <property name="orderstateDao" ref="orderstateDao" />
+        <property name="bankcardDao" ref="bankcardDao" />
+    </bean>
+    <bean id="systemService" class="com.javaee.service.impl.SystemServiceImpl">
+        <property name="orderstateDao" ref="orderstateDao" />
+        <property name="restaurantDao" ref="restaurantDao" />
+    </bean>
+    <bean id="restaurantService" class="com.javaee.service.impl.RestaurantServiceimpl">
+        <property name="restaurantDao" ref="restaurantDao"/>
+        <property name="orderstateDao" ref="orderstateDao"/>
+        <property name="foodDao" ref="foodDao" />
+        <property name="foodpackageDao" ref="foodpackageDao"/>
     </bean>
 </beans>

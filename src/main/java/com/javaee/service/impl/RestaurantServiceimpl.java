@@ -15,10 +15,10 @@ import java.util.UUID;
  */
 public class RestaurantServiceimpl implements RestaurantService {
 
-    RestaurantDao restaurantDao;
-    FoodDao foodDao;
-    FoodpackageDao foodpackageDao;
-    OrderstateDao orderstateDao;
+    private RestaurantDao restaurantDao;
+    private FoodDao foodDao;
+    private FoodpackageDao foodpackageDao;
+    private OrderstateDao orderstateDao;
 
     //注册新餐厅
     public void addNewRestaurant(RestaurantEntity restaurant) {
@@ -29,6 +29,11 @@ public class RestaurantServiceimpl implements RestaurantService {
     public int getCheckResult(String code) {
         RestaurantEntity restaurant=restaurantDao.retrieveByRestaurantId(code);
         return restaurant.getState();
+    }
+
+    //搜索特定餐厅
+    public RestaurantEntity retrieveByCode(String code) {
+        return restaurantDao.retrieveByRestaurantId(code);
     }
 
     //发布新菜品
@@ -74,5 +79,38 @@ public class RestaurantServiceimpl implements RestaurantService {
                 foodDao.changeFoodNum(foodId,foodNum,0);
             }
         }
+    }
+
+
+    public void setRestaurantDao(RestaurantDao restaurantDao) {
+        this.restaurantDao = restaurantDao;
+    }
+
+    public RestaurantDao getRestaurantDao() {
+        return restaurantDao;
+    }
+
+    public OrderstateDao getOrderstateDao() {
+        return orderstateDao;
+    }
+
+    public void setOrderstateDao(OrderstateDao orderstateDao) {
+        this.orderstateDao = orderstateDao;
+    }
+
+    public FoodDao getFoodDao() {
+        return foodDao;
+    }
+
+    public FoodpackageDao getFoodpackageDao() {
+        return foodpackageDao;
+    }
+
+    public void setFoodDao(FoodDao foodDao) {
+        this.foodDao = foodDao;
+    }
+
+    public void setFoodpackageDao(FoodpackageDao foodpackageDao) {
+        this.foodpackageDao = foodpackageDao;
     }
 }

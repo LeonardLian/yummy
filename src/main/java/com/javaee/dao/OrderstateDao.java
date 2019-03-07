@@ -1,5 +1,6 @@
 package com.javaee.dao;
 
+import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.OrderstateEntity;
 
 import java.sql.Timestamp;
@@ -14,5 +15,7 @@ public interface OrderstateDao {
     void updateOrderstate(int orderId, String newOrderState, Timestamp time);
 
     OrderstateEntity retrieveByOrderstateId(int orderId);
+
+    void createOrderstate();
 
 }

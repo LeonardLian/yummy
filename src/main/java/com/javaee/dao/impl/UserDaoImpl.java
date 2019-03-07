@@ -14,23 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     public void createUser(UserEntity user) {
-
-    }
-
-    public void updateUser(UserEntity user) {
-
+        this.getHibernateTemplate().save(user);
     }
 
     public UserEntity retrieveByUserId(int userId) {
-        return null;
+        return this.getHibernateTemplate().get(UserEntity.class,userId);
     }
 
-    public void deleteUser(UserEntity user) {
-
+    public void deleteUser(int userId) {
+        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, userId);
+        this.getHibernateTemplate().delete(user);
     }
 
     public void changeUserLevel(int userId, int newLevel) {
-
+        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, userId);
+        user.setLevel(newLevel);
+        this.getHibernateTemplate().update(user);
     }
 }
 

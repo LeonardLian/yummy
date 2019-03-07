@@ -15,7 +15,7 @@ public interface UserService {
 
     void addNewUser(UserEntity user);
 
-    void deleteUser(UserEntity user);
+    void deleteUser(int userId);
 
     void changeUserLevel(int userId);
 

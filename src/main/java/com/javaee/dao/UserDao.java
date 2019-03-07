@@ -13,7 +13,7 @@ public interface UserDao {
 
     UserEntity retrieveByUserId(int userId);
 
-    void deleteUser(UserEntity user);
+    void deleteUser(int userId);
 
     void changeUserLevel(int userId, int newLevel);
 

@@ -18,6 +18,8 @@ public interface RestaurantService {
 
     int getCheckResult(String code);
 
+    RestaurantEntity retrieveByCode(String code);
+
     void releaseFood(FoodEntity food);
 
     void releaseFoodpackage(FoodpackageEntity foodpackage);

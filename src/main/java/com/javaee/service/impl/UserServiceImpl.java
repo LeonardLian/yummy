@@ -19,18 +19,18 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao;
-    FoodorderDao foodorderDao;
-    OrderstateDao orderstateDao;
-    BankcardDao bankcardDao;
+    private UserDao userDao;
+    private FoodorderDao foodorderDao;
+    private OrderstateDao orderstateDao;
+    private BankcardDao bankcardDao;
     //注册用户
     public void addNewUser(UserEntity user) {
         userDao.createUser(user);
     }
 
     //注销用户
-    public void deleteUser(UserEntity user) {
-        userDao.deleteUser(user);
+    public void deleteUser(int userId) {
+        userDao.deleteUser(userId);
     }
 
 
@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
     //订餐 0未支付，1已支付，2已过期，3在路上，4已送达  5已退订
     public void callOrder(FoodorderEntity foodorder) {
         foodorderDao.createFoodOrder(foodorder);
+        orderstateDao.createOrderstate();
     }
 
     //支付订单
@@ -105,5 +106,21 @@ public class UserServiceImpl implements UserService {
 
     public FoodorderDao getFoodorderDao() {
         return foodorderDao;
+    }
+
+    public BankcardDao getBankcardDao() {
+        return bankcardDao;
+    }
+
+    public OrderstateDao getOrderstateDao() {
+        return orderstateDao;
+    }
+
+    public void setBankcardDao(BankcardDao bankcardDao) {
+        this.bankcardDao = bankcardDao;
+    }
+
+    public void setOrderstateDao(OrderstateDao orderstateDao) {
+        this.orderstateDao = orderstateDao;
     }
 }

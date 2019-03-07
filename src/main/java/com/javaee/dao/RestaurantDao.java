@@ -2,6 +2,8 @@ package com.javaee.dao;
 
 import com.javaee.entity.RestaurantEntity;
 
+import java.util.List;
+
 /**
  * @author: pis
  * @description: good good study
@@ -14,4 +16,10 @@ public interface RestaurantDao {
     RestaurantEntity retrieveByRestaurantId(String code);
 
     void changeRestaurantCheckState(String code, int newState);
+
+    List getAllRestaurantList();
+
+    List getAllFoodOfOneRestaurant(String code);
+
+    List getAllPackageOfOneRestaurant(String code);
 }
