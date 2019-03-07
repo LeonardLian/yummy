@@ -17,11 +17,6 @@ public class SystemServiceImpl implements SystemService {
 
     }
 
-    //付款后扣钱
-    public void changeMoneyOfCreditCard(UserEntity user, double money, int state) {
-
-    }
-
     //取消超过15分钟未付款的订单
     public void deleteUnpayOrder(FoodorderEntity foodorder) {
 

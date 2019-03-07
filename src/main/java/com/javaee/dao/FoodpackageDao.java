@@ -11,10 +11,6 @@ public interface FoodpackageDao {
 
     void createFoodpackage(FoodpackageEntity foodpackage);
 
-    void updateFoodpackage(FoodpackageEntity foodpackage);
-
-    FoodpackageEntity retrieveByFoodpackageId(int packageId);
-
-    void deleteFoodpackage(FoodpackageEntity foodpackage);
+    FoodpackageEntity retrievePackageByPackageId(int packageId);
 
 }

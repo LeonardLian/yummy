@@ -14,5 +14,6 @@
         <property name="foodCodes" column="foodCodes"/>
         <property name="foodNums" column="foodNums"/>
         <property name="totalprice" column="totalprice"/>
+        <property name="buildtime" column="buildtime"/>
     </class>
 </hibernate-mapping>

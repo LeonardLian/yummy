@@ -2,6 +2,8 @@ package com.javaee.dao;
 
 import com.javaee.entity.FoodorderEntity;
 
+import java.util.List;
+
 /**
  * @author: pis
  * @description: good good study
@@ -9,12 +11,9 @@ import com.javaee.entity.FoodorderEntity;
  */
 public interface FoodorderDao {
 
-    void createFoodorder(FoodorderEntity foodorder);
+    List getAllOrderOfOneUser(int userId);
 
-    void updateFoodorder(FoodorderEntity foodorder);
+    void createFoodOrder(FoodorderEntity foodorder);
 
-    FoodorderEntity retrieveByFoodorderId(int orderId);
-
-    void deleteFoodorder(FoodorderEntity foodorder);
-
+    FoodorderEntity retrieveOrderById(int orderId);
 }

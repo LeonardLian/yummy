@@ -1,6 +1,7 @@
 package com.javaee.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,7 @@ public class FoodorderEntity {
     private String foodCodes;
     private String foodNums;
     private double totalprice;
+    private Timestamp buildtime;
 
     @Id
     @Column(name = "orderid")
@@ -130,5 +132,15 @@ public class FoodorderEntity {
     @Override
     public int hashCode() {
         return Objects.hash(orderid, userid, restCode, useraddress, packageids, packagenums, foodCodes, foodNums, totalprice);
+    }
+
+    @Basic
+    @Column(name = "buildtime")
+    public Timestamp getBuildtime() {
+        return buildtime;
+    }
+
+    public void setBuildtime(Timestamp buildtime) {
+        this.buildtime = buildtime;
     }
 }

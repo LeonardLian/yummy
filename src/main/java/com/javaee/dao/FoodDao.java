@@ -11,10 +11,8 @@ public interface FoodDao {
 
     void createFood(FoodEntity food);
 
-    void updateFood(FoodEntity food);
+    void changeFoodNum(int foodId, int num, int state);
 
-    FoodEntity retrieveByFoodId(int foodId);
-
-    void deleteFood(FoodEntity food);
+    FoodEntity retrieveFoodById(int foodId);
 
 }

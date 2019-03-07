@@ -11,12 +11,8 @@ import java.sql.Timestamp;
  */
 public interface OrderstateDao {
 
-    void createOrderstate(OrderstateEntity Orderstate);
-
-    void updateOrderstate(OrderstateEntity oldOrderstate, String newOrderState, Timestamp time);
+    void updateOrderstate(int orderId, String newOrderState, Timestamp time);
 
     OrderstateEntity retrieveByOrderstateId(int orderId);
-
-    void deleteOrderstate(OrderstateEntity Orderstate);
 
 }

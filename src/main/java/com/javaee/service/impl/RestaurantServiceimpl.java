@@ -15,10 +15,10 @@ import java.util.UUID;
  */
 public class RestaurantServiceimpl implements RestaurantService {
 
-    private RestaurantDao restaurantDao;
-    private FoodDao foodDao;
-    private FoodpackageDao foodpackageDao;
-    private OrderstateDao orderstateDao;
+    RestaurantDao restaurantDao;
+    FoodDao foodDao;
+    FoodpackageDao foodpackageDao;
+    OrderstateDao orderstateDao;
 
     //注册新餐厅
     public void addNewRestaurant(RestaurantEntity restaurant) {
@@ -26,8 +26,9 @@ public class RestaurantServiceimpl implements RestaurantService {
     }
 
     //得到餐厅注册审核结果
-    public int getCheckResult(RestaurantEntity restaurant) {
-        return 0;
+    public int getCheckResult(String code) {
+        RestaurantEntity restaurant=restaurantDao.retrieveByRestaurantId(code);
+        return restaurant.getState();
     }
 
     //发布新菜品
@@ -41,8 +42,7 @@ public class RestaurantServiceimpl implements RestaurantService {
     }
 
     //处理订单状态，0未支付，1已支付，2已过期，3在路上，4已送达
-    public void handleOrderState(FoodorderEntity foodorder, String newOrderstate) {
-        int orderId=foodorder.getOrderid();
+    public void handleOrderState(int orderId, String newOrderstate) {
         OrderstateEntity orderstate=orderstateDao.retrieveByOrderstateId(orderId);
         orderstateDao.updateOrderstate(orderstate,newOrderstate, TimeUtils.getCurrentTime());
     }
@@ -54,6 +54,25 @@ public class RestaurantServiceimpl implements RestaurantService {
         String[] foodCodes=(foodorder.getFoodCodes()).split(",");
         String[] foodNums=(foodorder.getFoodNums()).split(",");
 
+        for(int i=0;i<foodCodes.length;i++){
+            int foodId=Integer.valueOf(foodCodes[i]);
+            int foodNum=Integer.valueOf(foodNums[i]);
+            foodDao.changeFoodNum(foodId,foodNum,0);
+        }
 
+        for(int i=0;i<packageIds.length;i++){
+            int packageId=Integer.valueOf(packageIds[i]);
+            int packageNum=Integer.valueOf(packageNums[i]);
+
+            FoodpackageEntity foodpackage=foodpackageDao.retrievePackageByPackageId(packageId);
+            String[] packageFoodCodes=foodpackage.getFoodCodes().split(",");
+            String[] packageFoodNums=foodpackage.getFoodNums().split(",");
+
+            for (int j=0;j<packageFoodCodes.length;j++) {
+                int foodId=Integer.valueOf(packageFoodCodes[j]);
+                int foodNum=Integer.valueOf(packageFoodNums[j])*packageNum;
+                foodDao.changeFoodNum(foodId,foodNum,0);
+            }
+        }
     }
 }

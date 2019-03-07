@@ -11,10 +11,7 @@ public interface RestaurantDao {
 
     void createRestaurant(RestaurantEntity restaurant);
 
-    void updateRestaurant(RestaurantEntity restaurant);
-
     RestaurantEntity retrieveByRestaurantId(String code);
 
-    void deleteRestaurant(RestaurantEntity restaurant);
 
 }

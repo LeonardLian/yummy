@@ -13,7 +13,5 @@ public interface SystemService {
 
     void checkRestaurant(RestaurantEntity restaurantEntity, int result);
 
-    void changeMoneyOfCreditCard(UserEntity user, double money, int state);
-
     void deleteUnpayOrder(FoodorderEntity foodorder);
 }

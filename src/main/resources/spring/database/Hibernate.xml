@@ -12,6 +12,8 @@
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="connection.autocommit">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/yummy</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
             </props>
         </property>
 
@@ -24,6 +26,13 @@
                 <value>hibernate/OrderstateEntity.hbm.xml</value>
                 <value>hibernate/RestaurantEntity.hbm.xml</value>
                 <value>hibernate/UserEntity.hbm.xml</value>
+                <value>classpath:hibernate/BankcardEntity.hbm.xml</value>
+                <value>classpath:hibernate/FoodEntity.hbm.xml</value>
+                <value>classpath:hibernate/FoodorderEntity.hbm.xml</value>
+                <value>classpath:hibernate/FoodpackageEntity.hbm.xml</value>
+                <value>classpath:hibernate/OrderstateEntity.hbm.xml</value>
+                <value>classpath:hibernate/RestaurantEntity.hbm.xml</value>
+                <value>classpath:hibernate/UserEntity.hbm.xml</value>
             </list>
         </property>
     </bean>

@@ -16,13 +16,13 @@ public interface RestaurantService {
 
     void addNewRestaurant(RestaurantEntity restaurant);
 
-    int getCheckResult(RestaurantEntity restaurant);
+    int getCheckResult(String code);
 
     void releaseFood(FoodEntity food);
 
     void releaseFoodpackage(FoodpackageEntity foodpackage);
 
-    void handleOrderState(FoodorderEntity foodorder, String newOrderstate);
+    void handleOrderState(int orderId, String newOrderstate);
 
     void changeFoodNum(FoodorderEntity foodorder);
 

@@ -11,10 +11,10 @@ public interface UserDao {
 
     void createUser(UserEntity user);
 
-    void updateUser(UserEntity user);
-
     UserEntity retrieveByUserId(int userId);
 
     void deleteUser(UserEntity user);
+
+    void changeUserLevel(int userId, int newLevel);
 
 }

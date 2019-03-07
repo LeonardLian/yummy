@@ -17,19 +17,16 @@ public interface UserService {
 
     void deleteUser(UserEntity user);
 
-    void modifyUserName(UserEntity user, String newName);
 
-    void modifyUserAddress(UserEntity user, String newAddress);
+    void changeUserLevel(int userId);
 
-    void changeUserLevel(UserEntity user);
-
-    UserEntity findCertainUserByUserId(String userId);
-
-    double calculateUserConsume(UserEntity user);
+    UserEntity findCertainUserByUserId(int userId);
 
     void callOrder(FoodorderEntity foodorder);
 
-    void cancelOrder(FoodorderEntity foodorder, Timestamp presentTime);
+    void cancelOrder(int orderId, Timestamp presentTime);
 
-    void payForOrder(FoodorderEntity foodorder, Timestamp presentTime);
+    void payForOrder(int orderId, String cardcode, Timestamp presentTime);
+
+    void arriveForOrder(int orderId, Timestamp presentTime);
 }
