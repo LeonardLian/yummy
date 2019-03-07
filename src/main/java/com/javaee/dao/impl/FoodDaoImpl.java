@@ -13,6 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
-public class FoodDaoImpl extends HibernateDaoSupport {
+public class FoodDaoImpl extends HibernateDaoSupport implements FoodDao{
+    public void createFood(FoodEntity food) {
+        this.getHibernateTemplate().save(food);
+    }
 
+    public void changeFoodNum(int foodId, int num, int state) {
+        FoodEntity food=this.getHibernateTemplate().get(FoodEntity.class, foodId);
+        int oldNum=food.getNumber();
+        if (state == 0) {
+            oldNum=oldNum-num;
+        }else {
+            oldNum=oldNum+num;
+        }
+        food.setNumber(oldNum);
+        this.getHibernateTemplate().update(food);
+    }
+
+    public FoodEntity retrieveFoodById(int foodId) {
+        return this.getHibernateTemplate().get(FoodEntity.class, foodId);
+    }
 }

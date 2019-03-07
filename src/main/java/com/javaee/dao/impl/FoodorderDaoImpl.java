@@ -6,6 +6,8 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author: pis
  * @description: good good study
@@ -13,6 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
-public class FoodorderDaoImpl extends HibernateDaoSupport {
+public class FoodorderDaoImpl extends HibernateDaoSupport implements FoodorderDao{
+    public void createFoodOrder(FoodorderEntity foodorder) {
+        this.getHibernateTemplate().save(foodorder);
+    }
 
+    public List getAllOrderOfOneUser(int userId) {
+        String hql="from FoodorderEntity where userid = ?0";
+        List orderlist=this.getHibernateTemplate().find(hql,userId);
+        return orderlist;
+    }
+
+    public FoodorderEntity retrieveOrderById(int orderId) {
+        return this.getHibernateTemplate().get(FoodorderEntity.class,orderId);
+    }
 }

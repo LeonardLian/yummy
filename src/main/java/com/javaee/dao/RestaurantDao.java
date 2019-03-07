@@ -13,5 +13,5 @@ public interface RestaurantDao {
 
     RestaurantEntity retrieveByRestaurantId(String code);
 
-
+    void changeRestaurantCheckState(String code, int newState);
 }

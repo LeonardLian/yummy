@@ -17,16 +17,15 @@ public interface UserService {
 
     void deleteUser(UserEntity user);
 
-
     void changeUserLevel(int userId);
 
     UserEntity findCertainUserByUserId(int userId);
 
     void callOrder(FoodorderEntity foodorder);
 
-    void cancelOrder(int orderId, Timestamp presentTime);
+    void cancelOrder(int orderId, String cardCode, Timestamp presentTime);
 
-    void payForOrder(int orderId, String cardcode, Timestamp presentTime);
+    void payForOrder(int orderId, String cardCode, Timestamp presentTime);
 
     void arriveForOrder(int orderId, Timestamp presentTime);
 }

@@ -4,6 +4,8 @@ import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.RestaurantEntity;
 import com.javaee.entity.UserEntity;
 
+import java.sql.Timestamp;
+
 /**
  * @author: pis
  * @description: good good study
@@ -11,7 +13,7 @@ import com.javaee.entity.UserEntity;
  */
 public interface SystemService {
 
-    void checkRestaurant(RestaurantEntity restaurantEntity, int result);
+    void checkRestaurant(String code, int result);
 
-    void deleteUnpayOrder(FoodorderEntity foodorder);
+    void deleteUnpayOrder(int orderId, Timestamp timestamp);
 }

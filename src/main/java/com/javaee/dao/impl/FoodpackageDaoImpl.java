@@ -13,6 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
-public class FoodpackageDaoImpl extends HibernateDaoSupport  {
+public class FoodpackageDaoImpl extends HibernateDaoSupport  implements FoodpackageDao{
+    public void createFoodpackage(FoodpackageEntity foodpackage) {
 
+    }
+
+    public FoodpackageEntity retrievePackageByPackageId(int packageId) {
+        return null;
+    }
 }

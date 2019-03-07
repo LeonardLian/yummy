@@ -78,15 +78,32 @@ public class UserServiceImpl implements UserService {
     }
 
     //退订订单
-    public void cancelOrder(int orderId, Timestamp presentTime) {
-
+    public void cancelOrder(int orderId, String cardCode, Timestamp presentTime) {
+        FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
+        double price=order.getTotalprice();
+        bankcardDao.updateBankcard(cardCode,price,1);
+        orderstateDao.updateOrderstate(orderId,"已退订",presentTime);
     }
 
     //订单已送达
     public void arriveForOrder(int orderId, Timestamp presentTime) {
-        FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
-
+        orderstateDao.updateOrderstate(orderId,"已送达",presentTime);
     }
 
 
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setFoodorderDao(FoodorderDao foodorderDao) {
+        this.foodorderDao = foodorderDao;
+    }
+
+    public FoodorderDao getFoodorderDao() {
+        return foodorderDao;
+    }
 }

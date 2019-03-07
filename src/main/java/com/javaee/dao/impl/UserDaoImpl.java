@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @date: create in 上午10:20 2019/3/5
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
-public class UserDaoImpl extends HibernateDaoSupport  {
+public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     public void createUser(UserEntity user) {
 
     }
@@ -26,6 +26,10 @@ public class UserDaoImpl extends HibernateDaoSupport  {
     }
 
     public void deleteUser(UserEntity user) {
+
+    }
+
+    public void changeUserLevel(int userId, int newLevel) {
 
     }
 }
