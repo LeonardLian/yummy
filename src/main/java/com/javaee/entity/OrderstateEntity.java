@@ -1,5 +1,7 @@
 package com.javaee.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -12,10 +14,20 @@ import java.util.Objects;
 @Entity
 @Table(name = "orderstate", schema = "yummy", catalog = "")
 public class OrderstateEntity {
+
+    @JSONField(name = "orderid")
     private int orderid;
+
+    @JSONField(name="orderstate")
     private String orderstate;
+
+    @JSONField(name = "paytime", format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp paytime;
+
+    @JSONField(name = "canceltime", format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp canceltime;
+
+    @JSONField(name = "arrivetime", format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp arrivetime;
 
     @Id

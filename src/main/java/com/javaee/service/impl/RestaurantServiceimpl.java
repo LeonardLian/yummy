@@ -46,7 +46,6 @@ public class RestaurantServiceimpl implements RestaurantService {
         foodpackageDao.createFoodpackage(foodpackage);
     }
 
-
     //处理订单状态，0未支付，1已支付，2已过期，3在路上，4已送达
     public void handleOrderState(int orderId, String newOrderstate) {
         orderstateDao.updateOrderstate(orderId,newOrderstate, TimeUtils.getCurrentTime());
@@ -80,6 +79,7 @@ public class RestaurantServiceimpl implements RestaurantService {
             }
         }
     }
+
 
 
     public void setRestaurantDao(RestaurantDao restaurantDao) {

@@ -1,5 +1,7 @@
 package com.javaee.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,11 +13,23 @@ import java.util.Objects;
 @Entity
 @Table(name = "foodpackage", schema = "yummy", catalog = "")
 public class FoodpackageEntity {
+
+    @JSONField(name = "packageid")
     private int packageid;
+
+    @JSONField(name = "restCode")
     private String restCode;
+
+    @JSONField(name = "name")
     private String name;
+
+    @JSONField(name = "foodCodes")
     private String foodCodes;
+
+    @JSONField(name = "foodNums")
     private String foodNums;
+
+    @JSONField(name = "price")
     private double price;
 
     @Id

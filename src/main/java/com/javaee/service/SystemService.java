@@ -23,4 +23,6 @@ public interface SystemService {
     List getAllFoodOfOneRestaurant(String code);
 
     List getAllPackageOfOneRestaurant(String code);
+
+    String generateRandomCode();
 }

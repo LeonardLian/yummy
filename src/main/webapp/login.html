@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎使用yummy</title>
+</head>
+<body>
+<div>
+    <button id="userView" onclick="userView()">用户登录</button>
+    <button id="restView" onclick="restView()">餐厅登录</button>
+</div>
+<div id="user" style="display: block">
+    <div>
+        <p>用户登录</p>
+    </div>
+    <div>
+        <input id="username" placeholder="邮箱" type="text" >
+    </div>
+    <div>
+        <input id="code" placeholder="验证码" type="text">
+        <button id="codeGet" onclick="sendEmail()">获取验证码</button>
+    </div>
+    <div>
+        <button id="userLogin" onclick="">登录</button>
+    </div>
+</div>
+<div id="rest" style="display: none">
+    <div>
+        <p>餐厅登录</p>
+    </div>
+    <div>
+        <input id="restCode" placeholder="注册码" type="text" >
+    </div>
+    <div>
+        <input id="password" placeholder="密码" type="password">
+    </div>
+    <div>
+        <button id="register" onclick="">注册</button>
+        <button id="restLogin" onclick="">登录</button>
+    </div>
+</div>
+<div>
+
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>"
+<script src="test.js"></script>
+<script>
+//    function userView() {
+//        document.getElementById("user").style.display='block';
+//        document.getElementById("rest").style.display='none';
+//    }
+//
+//    function restView() {
+//        document.getElementById('user').style.display='none';
+//        document.getElementById('rest').style.display='block';
+//    }
+    
+    function sendEmail() {
+        var email=$('#username').val();
+        var emailOb=new EmailOb(email);
+        //var emailJson=JSON.stringify(emailOb);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'EmailServlet',
+            data:emailOb,
+
+            success: function(msg){
+                //alert(msg.foodid);
+                //document.cookie="code="+msg;
+                alert("验证码已发送");
+            },
+            error:function (error) {
+                alert(error);
+            }
+
+        })
+    }
+
+
+    function EmailOb(email) {
+        this.email=email;
+    }
+</script>
+</html>

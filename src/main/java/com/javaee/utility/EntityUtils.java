@@ -23,7 +23,7 @@ public class EntityUtils  {
             int x=Integer.parseInt(str, 16);
             shotBuffer.append(chars[x%0x3e]);
         }
-        return shotBuffer.toString();
+        return shotBuffer.toString().substring(1);
     }
 
 

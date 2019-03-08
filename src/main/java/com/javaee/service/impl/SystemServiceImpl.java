@@ -6,6 +6,7 @@ import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.RestaurantEntity;
 import com.javaee.entity.UserEntity;
 import com.javaee.service.SystemService;
+import com.javaee.utility.EntityUtils;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -44,6 +45,9 @@ public class SystemServiceImpl implements SystemService {
         return restaurantDao.getAllPackageOfOneRestaurant(code);
     }
 
+    public String generateRandomCode() {
+        return EntityUtils.randomCodeGenerater();
+    }
 
     public void setOrderstateDao(OrderstateDao orderstateDao) {
         this.orderstateDao = orderstateDao;

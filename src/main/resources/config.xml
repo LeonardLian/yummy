@@ -9,5 +9,4 @@
     <import resource="spring/beans/Dao.xml" />
     <import resource="spring/beans/Service.xml" />
 
-
 </beans>
