@@ -28,10 +28,12 @@ import java.util.Properties;
 @WebServlet("/EmailServlet")
 public class EmailServlet extends HttpServlet{
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //super.doGet(req, resp);
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
 

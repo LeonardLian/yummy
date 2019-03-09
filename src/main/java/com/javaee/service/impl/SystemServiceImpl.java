@@ -25,10 +25,6 @@ public class SystemServiceImpl implements SystemService {
         restaurantDao.changeRestaurantCheckState(code,result);
     }
 
-    //取消超过15分钟未付款的订单
-    public void deleteUnpayOrder(int orderId, Timestamp timestamp) {
-        orderstateDao.updateOrderstate(orderId,"已过期",timestamp);
-    }
 
     //得到所有餐厅信息
     public List getAllRestaurantList() {
@@ -48,6 +44,9 @@ public class SystemServiceImpl implements SystemService {
     public String generateRandomCode() {
         return EntityUtils.randomCodeGenerater();
     }
+
+
+
 
     public void setOrderstateDao(OrderstateDao orderstateDao) {
         this.orderstateDao = orderstateDao;

@@ -8,6 +8,7 @@ import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.OrderstateEntity;
 import com.javaee.entity.UserEntity;
 import com.javaee.service.UserService;
+import com.javaee.utility.TimeUtils;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,6 +64,11 @@ public class UserServiceImpl implements UserService {
         return userDao.retrieveByUserId(userId);
     }
 
+    //检索特定订单信息
+    public FoodorderEntity findCertainFoodorderByOrderId(int orderId) {
+        return foodorderDao.retrieveOrderById(orderId);
+    }
+
 
     //订餐 0未支付，1已支付，2已过期，3在路上，4已送达  5已退订
     public void callOrder(FoodorderEntity foodorder) {
@@ -71,25 +77,36 @@ public class UserServiceImpl implements UserService {
     }
 
     //支付订单
-    public void payForOrder(int orderId, String cardCode, Timestamp presentTime) {
+    public void payForOrder(int orderId, String cardCode) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
         bankcardDao.updateBankcard(cardCode,price,0);
-        orderstateDao.updateOrderstate(orderId,"已支付",presentTime);
+        orderstateDao.updateOrderstate(orderId,"已支付",TimeUtils.getCurrentTime());
     }
 
     //退订订单
-    public void cancelOrder(int orderId, String cardCode, Timestamp presentTime) {
+    public void cancelOrder(int orderId, String cardCode) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
         bankcardDao.updateBankcard(cardCode,price,1);
-        orderstateDao.updateOrderstate(orderId,"已退订",presentTime);
+        orderstateDao.updateOrderstate(orderId,"已退订",TimeUtils.getCurrentTime());
     }
 
     //订单已送达
-    public void arriveForOrder(int orderId, Timestamp presentTime) {
-        orderstateDao.updateOrderstate(orderId,"已送达",presentTime);
+    public void arriveForOrder(int orderId) {
+        orderstateDao.updateOrderstate(orderId,"已送达",TimeUtils.getCurrentTime());
     }
+
+    //订单已过期
+    public void overdueForOrder(int orderId) {
+        orderstateDao.updateOrderstate(orderId,"已过期", TimeUtils.getCurrentTime());
+    }
+
+    //订单在路上
+    public void OnRoadForOrder(int orderId) {
+        orderstateDao.updateOrderstate(orderId,"在路上",TimeUtils.getCurrentTime());
+    }
+
 
 
     public void setUserDao(UserDao userDao) {

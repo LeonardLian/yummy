@@ -3,7 +3,6 @@ package com.javaee.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * @author: pis
@@ -11,7 +10,7 @@ import java.util.Objects;
  * @date: create in 上午9:32 2019/3/5
  */
 @Entity
-@Table(name = "restaurant", schema = "yummy", catalog = "")
+@Table(name = "restaurant", schema = "yummy")
 public class RestaurantEntity {
 
     @JSONField(name = "code")
@@ -28,6 +27,9 @@ public class RestaurantEntity {
 
     @JSONField(name = "state")
     private int state;
+
+    @JSONField(name = "name")
+    private String name;
 
     @Id
     @Column(name = "code")
@@ -79,20 +81,30 @@ public class RestaurantEntity {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestaurantEntity that = (RestaurantEntity) o;
         return state == that.state &&
-                Objects.equals(code, that.code) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(kind, that.kind);
+                code.equals(that.code) &&
+                password.equals(that.password) &&
+                address.equals(that.address) &&
+                kind.equals(that.kind);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, password, address, kind, state);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(code, password, address, kind, state);
+//    }
 }

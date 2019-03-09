@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
+
 
 /**
  * @author: pis
@@ -12,7 +12,7 @@ import java.util.Objects;
  * @date: create in 上午9:32 2019/3/5
  */
 @Entity
-@Table(name = "foodorder", schema = "yummy", catalog = "")
+@Table(name = "foodorder", schema = "yummy")
 public class FoodorderEntity {
 
     @JSONField(name="orderid")
@@ -135,27 +135,6 @@ public class FoodorderEntity {
         this.totalprice = totalprice;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FoodorderEntity that = (FoodorderEntity) o;
-        return orderid == that.orderid &&
-                userid == that.userid &&
-                Double.compare(that.totalprice, totalprice) == 0 &&
-                Objects.equals(restCode, that.restCode) &&
-                Objects.equals(useraddress, that.useraddress) &&
-                Objects.equals(packageids, that.packageids) &&
-                Objects.equals(packagenums, that.packagenums) &&
-                Objects.equals(foodCodes, that.foodCodes) &&
-                Objects.equals(foodNums, that.foodNums);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderid, userid, restCode, useraddress, packageids, packagenums, foodCodes, foodNums, totalprice);
-    }
-
     @Basic
     @Column(name = "buildtime")
     public Timestamp getBuildtime() {
@@ -165,4 +144,26 @@ public class FoodorderEntity {
     public void setBuildtime(Timestamp buildtime) {
         this.buildtime = buildtime;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FoodorderEntity that = (FoodorderEntity) o;
+        return orderid == that.orderid &&
+                userid == that.userid &&
+                Double.compare(that.totalprice, totalprice) == 0 &&
+                restCode.equals(that.restCode) &&
+                useraddress.equals(that.useraddress) &&
+                packageids.equals(that.packageids) &&
+                packagenums.equals(that.packagenums) &&
+                foodCodes.equals(that.foodCodes) &&
+                foodNums.equals(that.foodNums);
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(orderid, userid, restCode, useraddress, packageids, packagenums, foodCodes, foodNums, totalprice);
+//    }
+
 }

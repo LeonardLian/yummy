@@ -17,11 +17,11 @@
         <input id="username" placeholder="邮箱" type="text" >
     </div>
     <div>
-        <input id="code" placeholder="验证码" type="text">
+        <input id="userCode" placeholder="验证码" type="text">
         <button id="codeGet" onclick="sendEmail()">获取验证码</button>
     </div>
     <div>
-        <button id="userLogin" onclick="">登录</button>
+        <button onclick="userLogin()">登录</button>
     </div>
 </div>
 <div id="rest" style="display: none">
@@ -36,7 +36,7 @@
     </div>
     <div>
         <button id="register" onclick="">注册</button>
-        <button id="restLogin" onclick="">登录</button>
+        <button id="restLogin" onclick="restaurantLogin()">登录</button>
     </div>
 </div>
 <div>
@@ -44,17 +44,18 @@
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>"
-<script src="test.js"></script>
+<script src="get_cookies.js"></script>
+<!--<script src="test.js"></script>-->
 <script>
-//    function userView() {
-//        document.getElementById("user").style.display='block';
-//        document.getElementById("rest").style.display='none';
-//    }
-//
-//    function restView() {
-//        document.getElementById('user').style.display='none';
-//        document.getElementById('rest').style.display='block';
-//    }
+    function userView() {
+        document.getElementById("user").style.display='block';
+        document.getElementById("rest").style.display='none';
+    }
+
+    function restView() {
+        document.getElementById('user').style.display='none';
+        document.getElementById('rest').style.display='block';
+    }
     
     function sendEmail() {
         var email=$('#username').val();
@@ -69,7 +70,8 @@
 
             success: function(msg){
                 //alert(msg.foodid);
-                //document.cookie="code="+msg;
+                document.cookie="code="+msg;
+                document.cookie="email="+email;
                 alert("验证码已发送");
             },
             error:function (error) {
@@ -77,6 +79,27 @@
             }
 
         })
+    }
+
+
+    function userLogin() {
+        var emailcode=getcookie('code');
+        var userEmail=getcookie('email');
+        //var emailcode=getcookie('code');
+
+        var inputEmail=$('#username').val();
+        var inputCode=$('#userCode').val();
+
+        if((userEmail==inputEmail)&&(emailcode==inputCode)){
+            window.location.href='/userMainpage.html';
+        }
+        else {
+            alert("邮箱或密码错误")
+        }
+    }
+
+    function restaurantLogin() {
+        //0审核中 1通过 2未通过 3账户或密码错误
     }
 
 

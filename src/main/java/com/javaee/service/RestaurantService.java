@@ -24,8 +24,7 @@ public interface RestaurantService {
 
     void releaseFoodpackage(FoodpackageEntity foodpackage);
 
-    void handleOrderState(int orderId, String newOrderstate);
+    void changeFoodNum(FoodorderEntity foodorder, int state);
 
-    void changeFoodNum(FoodorderEntity foodorder);
-
+    boolean judgeRestaurantPassword(String code,String password);
 }

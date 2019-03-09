@@ -25,7 +25,7 @@ public class RestaurantServiceimpl implements RestaurantService {
         restaurantDao.createRestaurant(restaurant);
     }
 
-    //得到餐厅注册审核结果
+    //得到餐厅注册审核结果(0审核中 1通过 2未通过)
     public int getCheckResult(String code) {
         RestaurantEntity restaurant=restaurantDao.retrieveByRestaurantId(code);
         return restaurant.getState();
@@ -46,13 +46,9 @@ public class RestaurantServiceimpl implements RestaurantService {
         foodpackageDao.createFoodpackage(foodpackage);
     }
 
-    //处理订单状态，0未支付，1已支付，2已过期，3在路上，4已送达
-    public void handleOrderState(int orderId, String newOrderstate) {
-        orderstateDao.updateOrderstate(orderId,newOrderstate, TimeUtils.getCurrentTime());
-    }
 
-    //订单支付后，更改相关菜品数量
-    public void changeFoodNum(FoodorderEntity foodorder) {
+    //订单支付或退订后，更改相关菜品数量
+    public void changeFoodNum(FoodorderEntity foodorder, int state) {
         String[] packageIds=(foodorder.getPackageids()).split(",");
         String[] packageNums=(foodorder.getPackagenums()).split(",");
         String[] foodCodes=(foodorder.getFoodCodes()).split(",");
@@ -61,7 +57,7 @@ public class RestaurantServiceimpl implements RestaurantService {
         for(int i=0;i<foodCodes.length;i++){
             int foodId=Integer.valueOf(foodCodes[i]);
             int foodNum=Integer.valueOf(foodNums[i]);
-            foodDao.changeFoodNum(foodId,foodNum,0);
+            foodDao.changeFoodNum(foodId,foodNum,state);
         }
 
         for(int i=0;i<packageIds.length;i++){
@@ -75,10 +71,17 @@ public class RestaurantServiceimpl implements RestaurantService {
             for (int j=0;j<packageFoodCodes.length;j++) {
                 int foodId=Integer.valueOf(packageFoodCodes[j]);
                 int foodNum=Integer.valueOf(packageFoodNums[j])*packageNum;
-                foodDao.changeFoodNum(foodId,foodNum,0);
+                foodDao.changeFoodNum(foodId,foodNum,state);
             }
         }
     }
+
+    public boolean judgeRestaurantPassword(String code, String password) {
+        RestaurantEntity restaurantEntity=restaurantDao.retrieveByRestaurantId(code);
+        String correctPassword=restaurantEntity.getPassword();
+        return correctPassword.equals(password);
+    }
+
 
 
 

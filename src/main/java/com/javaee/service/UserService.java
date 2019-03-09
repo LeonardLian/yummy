@@ -21,11 +21,17 @@ public interface UserService {
 
     UserEntity findCertainUserByUserId(int userId);
 
+    FoodorderEntity findCertainFoodorderByOrderId(int orderId);
+
     void callOrder(FoodorderEntity foodorder);
 
-    void cancelOrder(int orderId, String cardCode, Timestamp presentTime);
+    void cancelOrder(int orderId, String cardCode);
 
-    void payForOrder(int orderId, String cardCode, Timestamp presentTime);
+    void payForOrder(int orderId, String cardCode);
 
-    void arriveForOrder(int orderId, Timestamp presentTime);
+    void arriveForOrder(int orderId);
+
+    void overdueForOrder(int orderId);
+
+    void OnRoadForOrder(int orderId);
 }

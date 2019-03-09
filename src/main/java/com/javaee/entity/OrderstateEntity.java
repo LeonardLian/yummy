@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
+
 
 /**
  * @author: pis
@@ -12,7 +12,7 @@ import java.util.Objects;
  * @date: create in 上午9:32 2019/3/5
  */
 @Entity
-@Table(name = "orderstate", schema = "yummy", catalog = "")
+@Table(name = "orderstate", schema = "yummy")
 public class OrderstateEntity {
 
     @JSONField(name = "orderid")
@@ -86,14 +86,14 @@ public class OrderstateEntity {
         if (o == null || getClass() != o.getClass()) return false;
         OrderstateEntity that = (OrderstateEntity) o;
         return orderid == that.orderid &&
-                Objects.equals(orderstate, that.orderstate) &&
-                Objects.equals(paytime, that.paytime) &&
-                Objects.equals(canceltime, that.canceltime) &&
-                Objects.equals(arrivetime, that.arrivetime);
+                orderstate.equals(that.orderstate) &&
+                paytime.equals(that.paytime) &&
+                canceltime.equals(that.canceltime) &&
+                arrivetime.equals(that.arrivetime);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderid, orderstate, paytime, canceltime, arrivetime);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(orderid, orderstate, paytime, canceltime, arrivetime);
+//    }
 }

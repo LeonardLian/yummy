@@ -16,13 +16,12 @@ public interface SystemService {
 
     void checkRestaurant(String code, int result);
 
-    void deleteUnpayOrder(int orderId, Timestamp timestamp);
-
     List getAllRestaurantList();
 
-    List getAllFoodOfOneRestaurant(String code);
+    List getAllFoodOfOneRestaurant(String restCode);
 
-    List getAllPackageOfOneRestaurant(String code);
+    List getAllPackageOfOneRestaurant(String restCode);
 
     String generateRandomCode();
+
 }

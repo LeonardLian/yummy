@@ -10,5 +10,6 @@
         <property name="address" column="address"/>
         <property name="kind" column="kind"/>
         <property name="state" column="state"/>
+        <property name="name" column="name"/>
     </class>
 </hibernate-mapping>

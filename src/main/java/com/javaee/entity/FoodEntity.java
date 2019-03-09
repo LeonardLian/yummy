@@ -3,7 +3,7 @@ package com.javaee.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import javax.persistence.*;
-import java.util.Objects;
+
 
 /**
  * @author: pis
@@ -11,7 +11,7 @@ import java.util.Objects;
  * @date: create in 上午9:32 2019/3/5
  */
 @Entity
-@Table(name = "food", schema = "yummy", catalog = "")
+@Table(name = "food", schema = "yummy")
 public class FoodEntity {
 
     @JSONField(name="foodid")
@@ -69,11 +69,11 @@ public class FoodEntity {
         FoodEntity that = (FoodEntity) o;
         return foodid == that.foodid &&
                 Double.compare(that.price, price) == 0 &&
-                Objects.equals(restCode, that.restCode);
+                restCode.equals(that.restCode);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(foodid, restCode, price);
-    }
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(foodid, restCode, price);
+//    }
 }
