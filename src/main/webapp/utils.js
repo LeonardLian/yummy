@@ -17,3 +17,10 @@ function getcookie(name) {
         return "";
     }
 }
+
+function getRestCode()
+{
+    var str=(window.location.search).substring(1);
+
+    return str.split('=')[1];
+}

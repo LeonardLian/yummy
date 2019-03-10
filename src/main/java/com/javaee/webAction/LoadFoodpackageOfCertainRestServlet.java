@@ -1,10 +1,10 @@
 package com.javaee.webAction;
 
 import com.alibaba.fastjson.JSON;
-import com.javaee.entity.FoodEntity;
 import com.javaee.entity.FoodpackageEntity;
-import com.javaee.service.SystemService;
-import com.javaee.service.impl.SystemServiceImpl;
+
+import com.javaee.service.FoodpackageService;
+import com.javaee.service.impl.FoodpackageServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +32,8 @@ public class LoadFoodpackageOfCertainRestServlet extends HttpServlet{
         req.setCharacterEncoding("utf-8");
 
         String restCode=req.getParameter("restCode");
-        SystemService systemService=new SystemServiceImpl();
-        List<FoodpackageEntity> foodpackageList=systemService.getAllPackageOfOneRestaurant(restCode);
+        FoodpackageService foodpackageService=new FoodpackageServiceImpl();
+        List<FoodpackageEntity> foodpackageList=foodpackageService.getAllPackageOfOneRestaurant(restCode);
 
         String json= JSON.toJSONString(foodpackageList);
 

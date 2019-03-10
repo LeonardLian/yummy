@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface FoodorderDao {
 
-    List getAllOrderOfOneUser(int userId);
+    List getAllOrderOfOneUser(String email);
 
     void createFoodOrder(FoodorderEntity foodorder);
 

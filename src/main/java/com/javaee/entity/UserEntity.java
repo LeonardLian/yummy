@@ -7,14 +7,11 @@ import javax.persistence.*;
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 上午9:32 2019/3/5
+ * @date: create in 下午7:27 2019/3/10
  */
 @Entity
 @Table(name = "user", schema = "yummy")
 public class UserEntity {
-
-    @JSONField(name = "userid")
-    private int userid;
 
     @JSONField(name = "email")
     private String email;
@@ -32,16 +29,6 @@ public class UserEntity {
     private int level;
 
     @Id
-    @Column(name = "userid")
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
-    @Basic
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -96,8 +83,7 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
-        return userid == that.userid &&
-                level == that.level &&
+        return level == that.level &&
                 email.equals(that.email) &&
                 phone.equals(that.phone) &&
                 name.equals(that.name) &&
@@ -106,6 +92,6 @@ public class UserEntity {
 
 //    @Override
 //    public int hashCode() {
-//        return Objects.hash(userid, email, phone, name, addresses, level);
+//        return Objects.hash(email, phone, name, addresses, level);
 //    }
 }

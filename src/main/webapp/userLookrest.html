@@ -2,10 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>餐厅详情</title>
 </head>
 <body>
-
+<button onclick="">订餐</button>
+<div>
+    <ul id="foodList"></ul>
+</div>
+<div>
+    <ul id="foodPackageList"></ul>
+</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var code=getRestCode();
+        var restCode=new RestCode(code);
+
+
+        var foodListJson=null;
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadFoodsOfCertainRestServlet',
+            data:restCode,
+            async:false,
+            success:function (data) {
+                foodListJson=data;
+            },
+            error:function (e) {
+                alert("LoadRestaurantList error");
+            }
+        });
+
+        for(var p in foodListJson){
+            var foodid=foodListJson[p].foodid;
+            var name=foodListJson[p].name;
+            var price=foodListJson[p].price;
+            var number=foodListJson[p].number;
+            $('#foodList').append('<li><div>'+foodid+','+name+','+price+'元,'+number+'个'+'</div></li>')
+        }
+
+        var foodpackageListJson=null;
+
+    });
+
+
+    function RestCode(restCode){
+        this.restCode=restCode;
+    }
+</script>
 </html>

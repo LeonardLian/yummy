@@ -5,8 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.javaee.entity.UserEntity" table="user" schema="yummy">
-        <id name="userid" column="userid"/>
-        <property name="email" column="email"/>
+        <id name="email" column="email"/>
         <property name="phone" column="phone"/>
         <property name="name" column="name"/>
         <property name="addresses" column="addresses"/>

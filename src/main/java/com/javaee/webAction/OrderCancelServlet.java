@@ -1,9 +1,11 @@
 package com.javaee.webAction;
 
 import com.javaee.entity.FoodorderEntity;
-import com.javaee.service.RestaurantService;
+import com.javaee.service.FoodService;
+import com.javaee.service.FoodorderService;
 import com.javaee.service.UserService;
-import com.javaee.service.impl.RestaurantServiceimpl;
+import com.javaee.service.impl.FoodServiceImpl;
+import com.javaee.service.impl.FoodorderServiceImpl;
 import com.javaee.service.impl.UserServiceImpl;
 
 
@@ -33,16 +35,17 @@ public class OrderCancelServlet extends HttpServlet {
         int orderid=Integer.parseInt(req.getParameter("orderid"));
         String cardcode=req.getParameter("cardcode");
 
+        FoodorderService foodorderService=new FoodorderServiceImpl();
+        foodorderService.cancelOrder(orderid,cardcode);
+
+        FoodorderEntity foodorderEntity=foodorderService.findCertainFoodorderByOrderId(orderid);
+        String email=foodorderEntity.getEmail();
+
         UserService userService=new UserServiceImpl();
-        userService.cancelOrder(orderid,cardcode);
+        userService.changeUserLevel(email);
 
-        FoodorderEntity foodorderEntity=userService.findCertainFoodorderByOrderId(orderid);
-        int userid=foodorderEntity.getUserid();
-
-        userService.changeUserLevel(userid);
-
-        RestaurantService restaurantService=new RestaurantServiceimpl();
-        restaurantService.changeFoodNum(foodorderEntity,1);
+        FoodService foodService=new FoodServiceImpl();
+        foodService.changeFoodNum(foodorderEntity,1);
 
         resp.getWriter().print("success");
     }

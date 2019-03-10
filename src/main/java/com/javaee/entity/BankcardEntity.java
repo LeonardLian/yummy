@@ -17,8 +17,8 @@ public class BankcardEntity {
     @JSONField(name = "cardid")
     private int cardid;
 
-    @JSONField(name="userid")
-    private int userid;
+    @JSONField(name="email")
+    private String email;
 
     @JSONField(name="cardcode")
     private String cardcode;
@@ -37,13 +37,13 @@ public class BankcardEntity {
     }
 
     @Basic
-    @Column(name = "userid")
-    public int getUserid() {
-        return userid;
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Basic
@@ -72,7 +72,7 @@ public class BankcardEntity {
         if (o == null || getClass() != o.getClass()) return false;
         BankcardEntity that = (BankcardEntity) o;
         return cardid == that.cardid &&
-                userid == that.userid &&
+                email.equals(that.email) &&
                 Double.compare(that.money, money) == 0 &&
                 cardcode.equals(that.cardcode);
     }

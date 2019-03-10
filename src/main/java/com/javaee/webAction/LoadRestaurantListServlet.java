@@ -1,10 +1,9 @@
 package com.javaee.webAction;
 
 import com.alibaba.fastjson.JSON;
-import com.javaee.entity.FoodEntity;
 import com.javaee.entity.RestaurantEntity;
-import com.javaee.service.SystemService;
-import com.javaee.service.impl.SystemServiceImpl;
+import com.javaee.service.RestaurantService;
+import com.javaee.service.impl.RestaurantServiceimpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +28,8 @@ public class LoadRestaurantListServlet extends HttpServlet{
 
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        SystemService systemService=new SystemServiceImpl();
-        List<RestaurantEntity> restaurantList=systemService.getAllRestaurantList();
+        RestaurantService restaurantService=new RestaurantServiceimpl();
+        List<RestaurantEntity> restaurantList=restaurantService.getAllRestaurantList();
 
         String json= JSON.toJSONString(restaurantList);
 

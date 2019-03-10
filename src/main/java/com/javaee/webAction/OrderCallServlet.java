@@ -1,7 +1,8 @@
 package com.javaee.webAction;
 
 import com.javaee.entity.FoodorderEntity;
-import com.javaee.service.impl.UserServiceImpl;
+import com.javaee.service.FoodorderService;
+import com.javaee.service.impl.FoodorderServiceImpl;
 import com.javaee.utility.TimeUtils;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ public class OrderCallServlet extends HttpServlet {
 
         FoodorderEntity foodorderEntity=new FoodorderEntity();
 
-        foodorderEntity.setUserid(Integer.parseInt(req.getParameter("userid")));
+        foodorderEntity.setEmail(req.getParameter("email"));
         foodorderEntity.setRestCode(req.getParameter("restCode"));
         foodorderEntity.setUseraddress(req.getParameter("useraddress"));
         foodorderEntity.setPackageids(req.getParameter("packageids"));
@@ -39,7 +40,8 @@ public class OrderCallServlet extends HttpServlet {
         foodorderEntity.setTotalprice(Double.parseDouble(req.getParameter("totalprice")));
         foodorderEntity.setBuildtime(TimeUtils.getCurrentTime());
 
-        new UserServiceImpl().callOrder(foodorderEntity);
+        FoodorderService foodorderService=new FoodorderServiceImpl();
+        foodorderService.callOrder(foodorderEntity);
 
         resp.getWriter().print("success");
     }

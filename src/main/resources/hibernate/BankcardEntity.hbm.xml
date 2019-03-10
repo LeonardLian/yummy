@@ -6,7 +6,7 @@
 
     <class name="com.javaee.entity.BankcardEntity" table="bankcard" schema="yummy">
         <id name="cardid" column="cardid"/>
-        <property name="userid" column="userid"/>
+        <property name="email" column="email"/>
         <property name="cardcode" column="cardcode"/>
         <property name="money" column="money"/>
     </class>

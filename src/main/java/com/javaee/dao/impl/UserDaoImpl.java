@@ -17,17 +17,17 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         this.getHibernateTemplate().save(user);
     }
 
-    public UserEntity retrieveByUserId(int userId) {
-        return null;
+    public UserEntity retrieveByUserEmail(String email) {
+        return this.getHibernateTemplate().get(UserEntity.class,email);
     }
 
-    public void deleteUser(int userId) {
-        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, userId);
+    public void deleteUser(String email) {
+        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, email);
         this.getHibernateTemplate().delete(user);
     }
 
-    public void changeUserLevel(int userId, int newLevel) {
-        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, userId);
+    public void changeUserLevel(String email, int newLevel) {
+        UserEntity user=this.getHibernateTemplate().get(UserEntity.class, email);
         user.setLevel(newLevel);
         this.getHibernateTemplate().update(user);
     }

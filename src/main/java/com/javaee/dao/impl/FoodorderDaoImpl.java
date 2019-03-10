@@ -20,9 +20,9 @@ public class FoodorderDaoImpl extends HibernateDaoSupport implements FoodorderDa
         this.getHibernateTemplate().save(foodorder);
     }
 
-    public List getAllOrderOfOneUser(int userId) {
-        String hql="from FoodorderEntity where userid = ?0";
-        List orderlist=this.getHibernateTemplate().find(hql,userId);
+    public List getAllOrderOfOneUser(String email) {
+        String hql="from FoodorderEntity where email = ?0";
+        List orderlist=this.getHibernateTemplate().find(hql,email);
         return orderlist;
     }
 

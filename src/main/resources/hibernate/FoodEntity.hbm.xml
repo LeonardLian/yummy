@@ -9,5 +9,6 @@
         <property name="restCode" column="restCode"/>
         <property name="price" column="price"/>
         <property name="number" column="number"/>
+        <property name="name" column="name" />
     </class>
 </hibernate-mapping>

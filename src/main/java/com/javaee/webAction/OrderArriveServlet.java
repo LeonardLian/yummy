@@ -1,8 +1,7 @@
 package com.javaee.webAction;
 
-import com.javaee.service.impl.RestaurantServiceimpl;
-import com.javaee.service.impl.UserServiceImpl;
-import com.javaee.utility.TimeUtils;
+import com.javaee.service.FoodorderService;
+import com.javaee.service.impl.FoodorderServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 /**
  * @author: pis
@@ -30,7 +28,8 @@ public class OrderArriveServlet extends HttpServlet {
 
         int orderid=Integer.parseInt(req.getParameter("orderid"));
 
-        new UserServiceImpl().arriveForOrder(orderid);
+        FoodorderService foodorderService=new FoodorderServiceImpl();
+        foodorderService.arriveForOrder(orderid);
 
         resp.getWriter().print("success");
     }

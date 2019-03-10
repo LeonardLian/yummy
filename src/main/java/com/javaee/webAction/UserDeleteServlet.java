@@ -26,10 +26,10 @@ public class UserDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
 
-        int userId=Integer.parseInt(req.getParameter("userId"));
+        String email=req.getParameter("email");
 
         UserService userService=new UserServiceImpl();
-        userService.deleteUser(userId);
+        userService.deleteUser(email);
 
         resp.getWriter().print("success");
     }

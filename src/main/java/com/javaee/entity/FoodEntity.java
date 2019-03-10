@@ -26,6 +26,9 @@ public class FoodEntity {
     @JSONField(name="number")
     private int number;
 
+    @JSONField(name = "name")
+    private String name;
+
     @Id
     @Column(name = "foodid")
     public int getFoodid() {
@@ -61,6 +64,16 @@ public class FoodEntity {
     public int getNumber() { return number; }
 
     public void setNumber(int number) { this.number = number; }
+
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {

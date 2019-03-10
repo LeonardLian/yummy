@@ -1,9 +1,7 @@
 package com.javaee.webAction;
 
-import com.alibaba.fastjson.JSON;
-import com.javaee.entity.FoodEntity;
-import com.javaee.service.SystemService;
-import com.javaee.service.impl.SystemServiceImpl;
+import com.javaee.service.UserService;
+import com.javaee.service.impl.UserServiceImpl;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -60,8 +57,8 @@ public class EmailServlet extends HttpServlet{
 
             message.setSubject("获取您的yummy邮箱验证码");
 
-            SystemService systemService=new SystemServiceImpl();
-            code=systemService.generateRandomCode();
+            UserService userService=new UserServiceImpl();
+            code=userService.generateRandomEmailCode();
 
             message.setContent("您的验证码为："+code,"text/html;charset=UTF-8");
 
@@ -80,9 +77,8 @@ public class EmailServlet extends HttpServlet{
 
         System.out.println(code);
         resp.getWriter().print(code);
+
 //        FoodEntity foodEntity=new FoodEntity();
-//        foodEntity.setFoodid(1);
-//        foodEntity.setRestCode("asdf");
 //        foodEntity.setPrice(13);
 //        foodEntity.setNumber(9);
 //

@@ -1,6 +1,7 @@
 package com.javaee.webAction;
 
-import com.javaee.service.impl.UserServiceImpl;
+import com.javaee.service.FoodorderService;
+import com.javaee.service.impl.FoodorderServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,8 @@ public class OrderOnRoadServlet extends HttpServlet {
 
         int orderid=Integer.parseInt(req.getParameter("orderid"));
 
-        new UserServiceImpl().OnRoadForOrder(orderid);
+        FoodorderService foodorderService=new FoodorderServiceImpl();
+        foodorderService.OnRoadForOrder(orderid);
 
         resp.getWriter().print("success");
     }

@@ -6,7 +6,7 @@
 
     <class name="com.javaee.entity.FoodorderEntity" table="foodorder" schema="yummy">
         <id name="orderid" column="orderid"/>
-        <property name="userid" column="userid"/>
+        <property name="email" column="email"/>
         <property name="restCode" column="restCode"/>
         <property name="useraddress" column="useraddress"/>
         <property name="packageids" column="packageids"/>

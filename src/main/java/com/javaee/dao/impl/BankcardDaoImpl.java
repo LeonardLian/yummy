@@ -18,12 +18,12 @@ import java.util.List;
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
 public class BankcardDaoImpl extends HibernateDaoSupport implements BankcardDao{
 
-    //创建新银行卡
+
     public void createBankcard(BankcardEntity bankcard) {
         this.getHibernateTemplate().save(bankcard);
     }
 
-    //银行卡余额修改 state 0扣钱 1加钱
+    // state 0扣钱 1加钱
     public void updateBankcard(String cardCode, double consumeMoney, int state) {
         String hql="from BankcardEntity where cardcode = ?0";
         List list=this.getHibernateTemplate().find(hql,cardCode);

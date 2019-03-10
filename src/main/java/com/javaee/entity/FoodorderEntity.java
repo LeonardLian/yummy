@@ -18,8 +18,8 @@ public class FoodorderEntity {
     @JSONField(name="orderid")
     private int orderid;
 
-    @JSONField(name = "userid")
-    private int userid;
+    @JSONField(name = "email")
+    private String email;
 
     @JSONField(name="restCode")
     private String restCode;
@@ -56,13 +56,13 @@ public class FoodorderEntity {
     }
 
     @Basic
-    @Column(name = "userid")
-    public int getUserid() {
-        return userid;
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Basic
@@ -151,7 +151,7 @@ public class FoodorderEntity {
         if (o == null || getClass() != o.getClass()) return false;
         FoodorderEntity that = (FoodorderEntity) o;
         return orderid == that.orderid &&
-                userid == that.userid &&
+                email.equals(that.email) &&
                 Double.compare(that.totalprice, totalprice) == 0 &&
                 restCode.equals(that.restCode) &&
                 useraddress.equals(that.useraddress) &&

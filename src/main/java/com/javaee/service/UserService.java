@@ -1,37 +1,21 @@
 package com.javaee.service;
 
-import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.UserEntity;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 上午10:35 2019/3/5
+ * @date: create in 下午7:52 2019/3/10
  */
 public interface UserService {
 
     void addOrModifyUser(UserEntity user);
 
-    void deleteUser(int userId);
+    void deleteUser(String email);
 
-    void changeUserLevel(int userId);
+    void changeUserLevel(String email);
 
-    UserEntity findCertainUserByUserId(int userId);
+    UserEntity findCertainUserByUserEmail(String email);
 
-    FoodorderEntity findCertainFoodorderByOrderId(int orderId);
-
-    void callOrder(FoodorderEntity foodorder);
-
-    void cancelOrder(int orderId, String cardCode);
-
-    void payForOrder(int orderId, String cardCode);
-
-    void arriveForOrder(int orderId);
-
-    void overdueForOrder(int orderId);
-
-    void OnRoadForOrder(int orderId);
+    String generateRandomEmailCode();
 }

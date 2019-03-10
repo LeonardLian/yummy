@@ -44,7 +44,7 @@
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="get_cookies.js"></script>
+<script src="utils.js"></script>
 <!--<script src="test.js"></script>-->
 <script>
     function userView() {
@@ -116,7 +116,7 @@
                     alert("账户或密码错误")
                 }
                 else if(msg==1){
-                    document.cookie='restcode='+restCode;
+                    document.cookie='restCode='+restCode;
                     window.location.href='/restMainpage.html';
                 }
             }

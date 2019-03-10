@@ -5,44 +5,47 @@
     <title>用户主页</title>
 </head>
 <body>
-<button onclick="modifyUserInfo()">完善个人信息</button>
-<ul id="restList"></ul>
+<div>
+    <button onclick="modifyUserInfo()">完善个人信息</button>
+</div>
+<div>
+    <ul id="restList"></ul>
+</div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="get_cookies.js"></script>
+<script src="utils.js"></script>
 <script>
-$(function () {
-    var listJson=null;
-    $.ajax({
-        type:'post',
-        dataType:'json',
-        url:'LoadRestaurantListServlet',
-        data:'callLIst',
-        async:false,
-        success:function (data) {
-            listJson=data;
-        },
-        error:function (e) {
-            alert("LoadRestaurantList error");
+    $(function () {
+        var listJson=null;
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadRestaurantListServlet',
+            data:'callLIst',
+            async:false,
+            success:function (data) {
+                listJson=data;
+            },
+            error:function (e) {
+                alert("LoadRestaurantList error");
+            }
+        });
+
+        for (var p in listJson){
+            var code=listJson[p].code;
+//        var address=listJson[p].address;
+            var kind=listJson[p].kind;
+            var name=listJson[p].name;
+            if(listJson[p].state==1){
+                var url='/userLookrest.html?code='+code;
+                $('#restList').append('<li><div><a href="'+url+'">'+name+'</a></div><div>'+kind+'</div></li>')
+            }
+            else {}
         }
     });
 
-    for (var p in listJson){
-        var code=listJson[p].code;
-//        var address=listJson[p].address;
-//        var kind=listJson[p].kind;
-        var name=listJson[p].name;
-        if(listJson[p].state==1){
-            var url='/userLookrest.html?'+code;
-            $('#restList').append('<li><div><a href="'+url+'">+name+</a></div></li>')
-        }
-        else {}
+    function modifyUserInfo() {
+        window.location.href='/userInfo.html';
     }
-});
-
-function modifyUserInfo() {
-    var email=getcookie('email');
-    window.location.href='/userInfo.html?'+email;
-}
 </script>
 </html>

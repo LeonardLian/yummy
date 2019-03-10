@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
 public class FoodDaoImpl extends HibernateDaoSupport implements FoodDao{
+
     public void createFood(FoodEntity food) {
         this.getHibernateTemplate().save(food);
     }

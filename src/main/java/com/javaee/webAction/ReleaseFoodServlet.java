@@ -1,8 +1,8 @@
 package com.javaee.webAction;
 
 import com.javaee.entity.FoodEntity;
-import com.javaee.service.RestaurantService;
-import com.javaee.service.impl.RestaurantServiceimpl;
+import com.javaee.service.FoodService;
+import com.javaee.service.impl.FoodServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,9 +32,10 @@ public class ReleaseFoodServlet extends HttpServlet {
         foodEntity.setRestCode(req.getParameter("restCode"));
         foodEntity.setPrice(Double.parseDouble(req.getParameter("price")));
         foodEntity.setNumber(Integer.parseInt(req.getParameter("number")));
+        foodEntity.setName(req.getParameter("name"));
 
-        RestaurantService restaurantService=new RestaurantServiceimpl();
-        restaurantService.releaseFood(foodEntity);
+        FoodService foodService=new FoodServiceImpl();
+        foodService.releaseFood(foodEntity);
 
         resp.getWriter().print("success");
     }

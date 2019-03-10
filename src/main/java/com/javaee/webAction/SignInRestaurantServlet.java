@@ -1,9 +1,7 @@
 package com.javaee.webAction;
 
-import com.javaee.service.SystemService;
+import com.javaee.service.RestaurantService;
 import com.javaee.service.impl.RestaurantServiceimpl;
-import com.javaee.service.impl.SystemServiceImpl;
-import com.javaee.utility.EntityUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,9 +30,10 @@ public class SignInRestaurantServlet extends HttpServlet{
         String code=req.getParameter("code");
         String password=req.getParameter("password");
 
-        boolean result=new RestaurantServiceimpl().judgeRestaurantPassword(code,password);
+        RestaurantService restaurantService=new RestaurantServiceimpl();
+        boolean result=restaurantService.judgeRestaurantPassword(code,password);
 
-        int checkResult=new RestaurantServiceimpl().getCheckResult(code);
+        int checkResult=restaurantService.getCheckResult(code);
 
         if(result){
             if (checkResult==0){

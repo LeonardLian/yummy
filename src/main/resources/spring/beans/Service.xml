@@ -3,20 +3,26 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="foodorderService" class="com.javaee.service.impl.FoodorderServiceImpl">
+        <property name="orderstateDao" ref="orderstateDao"/>
+        <property name="bankcardDao" ref="bankcardDao"/>
+        <property name="foodorderDao" ref="foodorderDao"/>
+    </bean>
+    <bean id="foodpackageService" class="com.javaee.service.impl.FoodpackageServiceImpl">
+        <property name="foodpackageDao" ref="foodpackageDao"/>
+        <property name="restaurantDao" ref="restaurantDao"/>
+    </bean>
     <bean id="userService" class="com.javaee.service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao" />
         <property name="foodorderDao" ref="foodorderDao" />
         <property name="orderstateDao" ref="orderstateDao" />
-        <property name="bankcardDao" ref="bankcardDao" />
-    </bean>
-    <bean id="systemService" class="com.javaee.service.impl.SystemServiceImpl">
-        <property name="orderstateDao" ref="orderstateDao" />
-        <property name="restaurantDao" ref="restaurantDao" />
     </bean>
     <bean id="restaurantService" class="com.javaee.service.impl.RestaurantServiceimpl">
         <property name="restaurantDao" ref="restaurantDao"/>
-        <property name="orderstateDao" ref="orderstateDao"/>
-        <property name="foodDao" ref="foodDao" />
+    </bean>
+    <bean id="foodService" class="com.javaee.service.impl.FoodServiceImpl">
+        <property name="restaurantDao" ref="restaurantDao"/>
         <property name="foodpackageDao" ref="foodpackageDao"/>
+        <property name="foodDao" ref="foodDao"/>
     </bean>
 </beans>
