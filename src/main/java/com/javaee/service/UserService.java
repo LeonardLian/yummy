@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    void addNewUser(UserEntity user);
+    void addOrModifyUser(UserEntity user);
 
     void deleteUser(int userId);
 

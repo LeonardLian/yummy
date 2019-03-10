@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
     private FoodorderDao foodorderDao;
     private OrderstateDao orderstateDao;
     private BankcardDao bankcardDao;
-    //注册用户
-    public void addNewUser(UserEntity user) {
-        userDao.createUser(user);
+
+    //完善用户信息
+    public void addOrModifyUser(UserEntity user) {
+
     }
 
     //注销用户

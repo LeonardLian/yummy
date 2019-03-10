@@ -43,7 +43,7 @@
 
 </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>"
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="get_cookies.js"></script>
 <!--<script src="test.js"></script>-->
 <script>
@@ -67,7 +67,6 @@
             dataType:'text',
             url:'EmailServlet',
             data:emailOb,
-
             success: function(msg){
                 //alert(msg.foodid);
                 document.cookie="code="+msg;
@@ -77,10 +76,8 @@
             error:function (error) {
                 alert(error);
             }
-
-        })
+        });
     }
-
 
     function userLogin() {
         var emailcode=getcookie('code');
@@ -99,12 +96,41 @@
     }
 
     function restaurantLogin() {
-        //0审核中 1通过 2未通过 3账户或密码错误
+        var restCode=$('#restCode').val();
+        var password=$('#password').val();
+        var restaurant=new Restaurant(restCode,password);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'SignInRestaurantServlet',
+            data:restaurant,
+            success:function (msg) {
+                if(msg==0){
+                    alert("您的餐厅仍在审核")
+                }
+                else if(msg==2){
+                    alert("您的餐厅审核未通过！")
+                }
+                else if(msg==3){
+                    alert("账户或密码错误")
+                }
+                else if(msg==1){
+                    document.cookie='restcode='+restCode;
+                    window.location.href='/restMainpage.html';
+                }
+            }
+        })
     }
 
 
     function EmailOb(email) {
         this.email=email;
+    }
+
+    function Restaurant(code,password) {
+        this.code=code;
+        this.password=password;
     }
 </script>
 </html>

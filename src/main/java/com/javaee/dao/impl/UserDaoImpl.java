@@ -18,7 +18,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
     }
 
     public UserEntity retrieveByUserId(int userId) {
-        return this.getHibernateTemplate().get(UserEntity.class,userId);
+        return null;
     }
 
     public void deleteUser(int userId) {

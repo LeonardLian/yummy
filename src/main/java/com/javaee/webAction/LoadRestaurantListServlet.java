@@ -24,16 +24,16 @@ public class LoadRestaurantListServlet extends HttpServlet{
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        doPost(req,resp);
+    }
+
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SystemService systemService=new SystemServiceImpl();
         List<RestaurantEntity> restaurantList=systemService.getAllRestaurantList();
 
         String json= JSON.toJSONString(restaurantList);
 
         resp.getWriter().print(json);
-    }
-
-
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 }
