@@ -12,8 +12,6 @@ public interface BankcardDao {
 
     void updateBankcard(String email, double consumeMoney, int state);
 
-    BankcardEntity retrieveByBankcardId(String cardCode);
-
     BankcardEntity retrieveByEmail(String email);
 
     void deleteBankcard(String cardCode);

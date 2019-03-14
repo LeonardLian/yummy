@@ -54,6 +54,15 @@ public class RestaurantServiceimpl implements RestaurantService {
         return EntityUtils.randomCodeGenerater();
     }
 
+    //更新餐厅信息
+    public void updateRestaurant(String restCode, String name, String address, String kind) {
+        restaurantDao.updateRestaurant(restCode,name,address,kind);
+    }
+
+    //返回未审核的餐厅
+    public List getUncheckRest() {
+        return restaurantDao.getUncheckRestaurant();
+    }
 
     public void setRestaurantDao(RestaurantDao restaurantDao) {
         this.restaurantDao = restaurantDao;

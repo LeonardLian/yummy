@@ -2,9 +2,199 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>发布信息</title>
 </head>
 <body>
-
+<div>
+    <button id="foodView" onclick="foodView()">发布单品</button>
+    <button id="packageView" onclick="packageView()">发布套餐</button>
+</div>
+<div id="user" style="display: block">
+    <div>
+        <p>发布单品</p>
+    </div>
+    <div>
+        <input id="name" placeholder="名字" type="text" >
+    </div>
+    <div>
+        <input id="price" placeholder="价格" type="number">
+    </div>
+    <div>
+        <input id="number" placeholder="数量" type="number">
+    </div>
+    <div>
+        <button onclick="releasefood()">发布</button>
+    </div>
+</div>
+<div id="rest" style="display: none">
+    <div>
+        <p>发布套餐</p>
+    </div>
+    <div>
+        <input id="packageName" placeholder="套餐名" type="text" >
+    </div>
+    <div>
+        <input id="foodnum" type="number" placeholder="套餐所包含的菜品数量" onchange="generateNewFoodoption()">
+    </div>
+    <div id="foodli">
+    </div>
+    <div>
+        <input id="packagePrice" placeholder="总价">
+    </div>
+    <div>
+        <button onclick="releasefoodpackage()">发布</button>
+    </div>
+</div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var code = getcookie('restCode');
+
+        var restCode = new RestCode(code);
+
+        var foodListJson = null;
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: 'LoadFoodsOfCertainRestServlet',
+            data: restCode,
+            async: false,
+            success: function (data) {
+                foodListJson = data;
+            },
+            error: function (e) {
+                alert("LoadFoodsOfCertainRestServlet error");
+            }
+        });
+        var foodid=[];
+        var name=[];
+        var num=[];
+        for (var p in foodListJson) {
+            foodid.push(foodListJson[p].foodid);
+            name.push(foodListJson[p].name);
+            num.push(foodListJson[p].number);
+        }
+
+        var result=[];
+        for(var i=0;i<foodid.length;i++) {
+            result.push(foodid[i]+':'+name[i]+' '+num[i]);
+        }
+
+        var resultStr=result.join(',');
+        document.cookie='foodname'+resultStr;
+
+    });
+
+    function RestCode(restCode){
+        this.restCode=restCode;
+    }
+</script>
+<script>
+    function foodView() {
+        document.getElementById("user").style.display='block';
+        document.getElementById("rest").style.display='none';
+    }
+    function packageView() {
+        document.getElementById('user').style.display='none';
+        document.getElementById('rest').style.display='block';
+    }
+
+    function generateNewFoodoption() {
+        $('#foodli').empty();
+        var num=$('#foodnum').val();
+        for(var i=1;i<=num;i++){
+            var id='food'+i;
+            var numid='num'+i;
+
+            $('#foodli').append('<div>' +
+                '<select id="'+id+'" >' +
+                '</select>' +
+                '<input id="'+numid+'" type="number" placeholder="数量">' +
+                '</div>');
+
+            var foodname=getcookie('foodname');
+            var arr=foodname.split(',');
+
+            for(var p in arr){
+                var food=(arr[p].split(' '))[0];
+                $('#'+id).append('<option value="'+food+'">'+food+'</option>');
+            }
+        }
+    }
+
+    function releasefood() {
+        var restCode=getcookie('restCode');
+        var name=$('#name').val();
+        var price=$('#price').val();
+        var number=$('#number').val();
+
+        var food=new Food(restCode,name,price,number);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'ReleaseFoodServlet',
+            data:food,
+            success:function (data) {
+                alert('发布成功');
+            },
+            error:function (e) {
+                alert('ReleaseFoodServlet error');
+            }
+        })
+    }
+
+    function releasefoodpackage() {
+        var restCode=getcookie('restCode');
+        var name=$('#packageName').val();
+        var price=$('#packagePrice').val();
+
+        var codeList=[];
+        var numlist=[];
+
+        var foodnum=$('#foodnum').val();
+        for(var i=1;i<=foodnum;i++){
+            var list=($('#food'+i).find('option:selected').text()).split(':');
+            codeList.push(list[0]);
+
+            numlist.push($('#num'+i).val());
+        }
+
+        var foodCodes=codeList.join(' ');
+        var foodNums=numlist.join(' ');
+
+        var foodpackage=new FoodPackage(restCode,name,foodCodes,foodNums,price);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'ReleaseFoodpackageServlet',
+            data:foodpackage,
+            success:function (data) {
+                alert('发布成功');
+            },
+            error:function (e) {
+                alert('ReleaseFoodpackageServlet error');
+            }
+        })
+    }
+
+
+
+    function Food(restCode,name,price,number) {
+        this.restCode=restCode;
+        this.name=name;
+        this.price=price;
+        this.number=number;
+    }
+
+    function FoodPackage(restCode,name,foodCodes,foodNums,price) {
+        this.restCode=restCode;
+        this.name=name;
+        this.foodCodes=foodCodes;
+        this.foodNums=foodNums;
+        this.price=price;
+    }
+</script>
 </html>

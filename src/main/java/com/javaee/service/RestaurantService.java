@@ -24,4 +24,8 @@ public interface RestaurantService {
     List getAllRestaurantList();
 
     String generateRandomrestCode();
+
+    void updateRestaurant(String restCode,String name, String address, String kind);
+
+    List getUncheckRest();
 }

@@ -17,9 +17,13 @@ public interface RestaurantDao {
 
     void changeRestaurantCheckState(String code, int newState);
 
+    void updateRestaurant(String restCode, String name, String address, String kind);
+
     List getAllRestaurantList();
 
     List getAllFoodOfOneRestaurant(String code);
 
     List getAllPackageOfOneRestaurant(String code);
+
+    List getUncheckRestaurant();
 }

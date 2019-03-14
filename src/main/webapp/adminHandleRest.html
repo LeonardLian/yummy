@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>处理餐厅审核</title>
+</head>
+<body>
+<button onclick="agree()">同意</button>
+<button onclick="disagree()">不同意</button>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    function agree() {
+        var code=getRestCode();
+        var ob=new ob(code,1);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'CheckRestaurant',
+            data:ob,
+            success:function (data) {
+                alert("审核结果：通过");
+                window.location.href='/admin.html';
+            },
+            error:function (e) {
+                alert('checkRestaurant error');
+            }
+        })
+    }
+
+    function disagree() {
+        var code=getRestCode();
+        var ob=new ob(code,2);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'CheckRestaurant',
+            data:ob,
+            success:function (data) {
+                alert("审核结果：不通过");
+                window.location.href='/admin.html';
+            },
+            error:function (e) {
+                alert('checkRestaurant error');
+            }
+        })
+    }
+
+    function ob(restCode,result) {
+        this.restCode=restCode;
+        this.result=result;
+    }
+</script>
+</html>

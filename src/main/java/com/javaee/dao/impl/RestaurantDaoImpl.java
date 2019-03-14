@@ -32,6 +32,15 @@ public class RestaurantDaoImpl extends HibernateDaoSupport implements Restaurant
         this.getHibernateTemplate().update(restaurant);
     }
 
+    public void updateRestaurant(String restCode, String name, String address, String kind) {
+        RestaurantEntity restaurantEntity=this.getHibernateTemplate().get(RestaurantEntity.class, restCode);
+        restaurantEntity.setName(name);
+        restaurantEntity.setAddress(address);
+        restaurantEntity.setKind(kind);
+        restaurantEntity.setState(0);
+        this.getHibernateTemplate().update(restaurantEntity);
+    }
+
     public List getAllRestaurantList() {
         return this.getHibernateTemplate().find("from RestaurantEntity");
     }
@@ -49,5 +58,8 @@ public class RestaurantDaoImpl extends HibernateDaoSupport implements Restaurant
         return this.getHibernateTemplate().find(hql,code);
     }
 
-
+    public List getUncheckRestaurant() {
+        String hql="from RestaurantEntity where state=0";
+        return this.getHibernateTemplate().find(hql);
+    }
 }

@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
     FoodorderDao foodorderDao;
     OrderstateDao orderstateDao;
     //完善用户信息
-    public void addOrModifyUser(UserEntity user) {
-
+    public void addOrModifyUser(String email,String phone,String name,String address,String cardcode) {
+        userDao.createOrModifyUser(email,phone,name,address,cardcode);
     }
 
     //注销用户

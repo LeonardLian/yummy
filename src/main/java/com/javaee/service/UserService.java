@@ -9,7 +9,7 @@ import com.javaee.entity.UserEntity;
  */
 public interface UserService {
 
-    void addOrModifyUser(UserEntity user);
+    void addOrModifyUser(String email,String phone,String name,String address,String cardcode);
 
     void deleteUser(String email);
 

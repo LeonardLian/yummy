@@ -9,7 +9,7 @@ import com.javaee.entity.UserEntity;
  */
 public interface UserDao {
 
-    void createUser(UserEntity user);
+    void createOrModifyUser(String email,String phone,String name,String addresses,String cardcode);
 
     UserEntity retrieveByUserEmail(String email);
 

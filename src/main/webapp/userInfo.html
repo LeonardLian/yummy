@@ -2,9 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>用户信息</title>
 </head>
 <body>
-
+<input id="phone" type="number">
+<input id="name" type="text">
+<input id="address" type="text">
+<input id="cardcode" type="number">
+<button onclick="submitChange()">修改</button>
+<button onclick="cancelit()">取消</button>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var email=getcookie('email');
+        var emailOb=new EmailOb(email);
+
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadUserInfoServlet',
+            data:emailOb,
+            success:function (data) {
+                var name=data.name;
+                var addresses=data.addresses;
+                var phone=data.phone;
+                $('#name').val(name);
+                $('#address').val(addresses);
+                $('#phone')[0].val(phone);
+            },
+            error:function () {
+                alert('LoadUserInfoServlet error');
+            }
+        })
+    });
+
+    function submitChange() {
+        var email=getcookie('email')
+        var newName=$('#name').val();
+        var newaddresses=$('#address').val();
+        var newphone=$('#phone').val();
+        var newCard=$('#cardcode').val();
+
+        var user=new User(email,newName,newaddresses,newphone,newCard);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'ModifyUserServlet',
+            data:user,
+            success:function (data) {
+                alert("提交成功,等待审核");
+            },
+            error:function (e) {
+                alert('RestModifyServlet error');
+            }
+        })
+    }
+
+    function cancelit() {
+        window.location.href='/userMainpage.html';
+    }
+
+    function EmailOb(email) {
+        this.email=email;
+    }
+
+    function User(email,name,address,phone,cardcode) {
+        this.email=email;
+        this.name=name;
+        this.addresses=address;
+        this.phone=phone;
+        this.cardcode=cardcode;
+    }
+</script>
 </html>

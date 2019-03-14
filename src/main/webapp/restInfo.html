@@ -17,8 +17,8 @@
         <option value="f">风味餐馆</option>
     </select>
 </div>
-<button id="submitChange">提交修改申请</button>
-<button id="cancel">取消</button>
+<button id="submitChange" onclick="submitChange()">提交修改申请</button>
+<button id="cancel" onclick="cancelit()">取消</button>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="utils.js"></script>
@@ -38,16 +38,48 @@
                 var kind=data.kind;
                 $('#name').val(name);
                 $('#address').val(address);
-                $('#kind').val(kind);
+                $('#kind')[0].val(kind);
             },
             error:function () {
-
+                alert('LoadRestaurantInfoServlet error');
             }
         })
-    })
+    });
+
+    function submitChange() {
+        var restCode=getcookie('restCode')
+        var newName=$('#name').val();
+        var newaddress=$('#address').val();
+        var newkind=$('#kind').find('option:selected').text();
+
+        var rest=new Rest(restCode,newName,newaddress,newkind);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'ModifyRestServlet',
+            data:rest,
+            success:function (data) {
+                alert("提交成功,等待审核");
+            },
+            error:function (e) {
+                alert('ModifyRestServlet error');
+            }
+        })
+    }
+
+    function cancelit() {
+        window.location.href='/restMainpage.html';
+    }
 
     function RestCodeOb(restCode) {
         this.restCode=restCode;
+    }
+
+    function Rest(restCode,name,address,kind) {
+        this.restCode=restCode;
+        this.name=name;
+        this.address=address;
+        this.kind=kind;
     }
 </script>
 </html>

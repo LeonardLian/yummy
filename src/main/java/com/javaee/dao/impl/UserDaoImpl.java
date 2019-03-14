@@ -1,6 +1,7 @@
 package com.javaee.dao.impl;
 
 import com.javaee.dao.UserDao;
+import com.javaee.entity.BankcardEntity;
 import com.javaee.entity.UserEntity;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
@@ -13,8 +14,32 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW )
 public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
-    public void createUser(UserEntity user) {
-        this.getHibernateTemplate().save(user);
+    public void createOrModifyUser(String email, String phone, String name, String addresses,String cardcode) {
+        UserEntity userEntity=this.getHibernateTemplate().get(UserEntity.class,email);
+        if(userEntity.getEmail().equals(email)){
+            userEntity.setName(name);
+            userEntity.setAddresses(addresses);
+            userEntity.setPhone(phone);
+            this.getHibernateTemplate().update(userEntity);
+
+            BankcardEntity bankcardEntity=new BankcardDaoImpl().retrieveByEmail(email);
+            bankcardEntity.setCardcode(cardcode);
+        }
+        else {
+            UserEntity userEntity1=new UserEntity();
+            userEntity1.setEmail(email);
+            userEntity1.setPhone(phone);
+            userEntity1.setAddresses(addresses);
+            userEntity1.setName(name);
+            userEntity1.setLevel(0);
+            this.getHibernateTemplate().save(userEntity1);
+
+            BankcardEntity bankcardEntity=new BankcardEntity();
+            bankcardEntity.setCardcode(cardcode);
+            bankcardEntity.setEmail(email);
+            bankcardEntity.setMoney(1000);
+            new BankcardDaoImpl().createBankcard(bankcardEntity);
+        }
     }
 
     public UserEntity retrieveByUserEmail(String email) {
