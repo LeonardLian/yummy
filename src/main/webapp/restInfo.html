@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>餐厅信息</title>
+</head>
+<body>
+<div>
+    <input id="name" type="text">
+    <input id="address" type="text" >
+    <select id="kind">
+        <option value="a">自助餐</option>
+        <option value="b">快餐店</option>
+        <option value="c">大排档</option>
+        <option value="d">高档酒楼</option>
+        <option value="e">酒吧</option>
+        <option value="f">风味餐馆</option>
+    </select>
+</div>
+<button id="submitChange">提交修改申请</button>
+<button id="cancel">取消</button>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var restcode=getcookie('restCode');
+        var restCodeOb=new RestCodeOb(restcode);
+
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadRestaurantInfoServlet',
+            data:restCodeOb,
+            success:function (data) {
+                var name=data.name;
+                var address=data.address;
+                var kind=data.kind;
+                $('#name').val(name);
+                $('#address').val(address);
+                $('#kind').val(kind);
+            },
+            error:function () {
+
+            }
+        })
+    })
+
+    function RestCodeOb(restCode) {
+        this.restCode=restCode;
+    }
+</script>
+</html>

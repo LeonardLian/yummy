@@ -7,6 +7,7 @@
 <body>
 <div>
     <button onclick="modifyUserInfo()">完善个人信息</button>
+    <button onclick="gotoOrders()">查看订单</button>
 </div>
 <div>
     <ul id="restList"></ul>
@@ -27,7 +28,7 @@
                 listJson=data;
             },
             error:function (e) {
-                alert("LoadRestaurantList error");
+                alert("LoadRestaurantListServlet error");
             }
         });
 
@@ -46,6 +47,10 @@
 
     function modifyUserInfo() {
         window.location.href='/userInfo.html';
+    }
+
+    function gotoOrders() {
+        window.location.href='/userLookOrders.html'
     }
 </script>
 </html>

@@ -24,3 +24,15 @@ function getRestCode()
 
     return str.split('=')[1];
 }
+
+function outOfTime(di) {
+    var dateBegin=new Date(di.replace(/-/g,"/"));
+    var dateEnd=new Date();
+    var dateDiff=dateEnd.getTime()-dateBegin.getTime();
+    if (dateDiff>120000){
+        return true;
+    }
+    else {
+        return false;
+    }
+}

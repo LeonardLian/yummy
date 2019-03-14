@@ -24,9 +24,9 @@ public class BankcardDaoImpl extends HibernateDaoSupport implements BankcardDao{
     }
 
     // state 0扣钱 1加钱
-    public void updateBankcard(String cardCode, double consumeMoney, int state) {
-        String hql="from BankcardEntity where cardcode = ?0";
-        List list=this.getHibernateTemplate().find(hql,cardCode);
+    public void updateBankcard(String email, double consumeMoney, int state) {
+        String hql="from BankcardEntity where email = ?0";
+        List list=this.getHibernateTemplate().find(hql,email);
         double oldMoney=((BankcardEntity)list.get(0)).getMoney();
 
         if(state==0){
@@ -44,6 +44,12 @@ public class BankcardDaoImpl extends HibernateDaoSupport implements BankcardDao{
     public BankcardEntity retrieveByBankcardId(String cardCode) {
         String hql="from BankcardEntity where cardcode = ?0";
         List list=this.getHibernateTemplate().find(hql,cardCode);
+        return (BankcardEntity)list.get(0);
+    }
+
+    public BankcardEntity retrieveByEmail(String email) {
+        String hql="from BankcardEntity where email=?0";
+        List list=this.getHibernateTemplate().find(hql,email);
         return (BankcardEntity)list.get(0);
     }
 

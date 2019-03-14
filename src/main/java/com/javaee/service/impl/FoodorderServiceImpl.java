@@ -4,8 +4,11 @@ import com.javaee.dao.BankcardDao;
 import com.javaee.dao.FoodorderDao;
 import com.javaee.dao.OrderstateDao;
 import com.javaee.entity.FoodorderEntity;
+import com.javaee.entity.OrderstateEntity;
 import com.javaee.service.FoodorderService;
 import com.javaee.utility.TimeUtils;
+
+import java.util.List;
 
 /**
  * @author: pis
@@ -23,6 +26,10 @@ public class FoodorderServiceImpl implements FoodorderService{
         return foodorderDao.retrieveOrderById(orderId);
     }
 
+    //检索特定订单状态
+    public OrderstateEntity findCertainOrderstateByOrderId(int orderId) {
+        return orderstateDao.retrieveByOrderstateId(orderId);
+    }
 
     //订餐 0未支付，1已支付，2已过期，3在路上，4已送达  5已退订
     public void callOrder(FoodorderEntity foodorder) {
@@ -31,18 +38,18 @@ public class FoodorderServiceImpl implements FoodorderService{
     }
 
     //支付订单
-    public void payForOrder(int orderId, String cardCode) {
+    public void payForOrder(int orderId, String email) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
-        bankcardDao.updateBankcard(cardCode,price,0);
+        bankcardDao.updateBankcard(email,price,0);
         orderstateDao.updateOrderstate(orderId,"已支付", TimeUtils.getCurrentTime());
     }
 
     //退订订单
-    public void cancelOrder(int orderId, String cardCode) {
+    public void cancelOrder(int orderId, String email) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
-        bankcardDao.updateBankcard(cardCode,price,1);
+        bankcardDao.updateBankcard(email,price,1);
         orderstateDao.updateOrderstate(orderId,"已退订",TimeUtils.getCurrentTime());
     }
 
@@ -61,7 +68,15 @@ public class FoodorderServiceImpl implements FoodorderService{
         orderstateDao.updateOrderstate(orderId,"在路上",TimeUtils.getCurrentTime());
     }
 
+    //得到特定用户的所有订单
+    public List getAllOrderOfOneUser(String email) {
+        return foodorderDao.getAllOrderOfOneUser(email);
+    }
 
+    //得到特定餐厅的所有订单
+    public List getAllOrderOfOneRest(String restCode) {
+        return foodorderDao.getAllOrderOfOneRest(restCode);
+    }
 
     public void setOrderstateDao(OrderstateDao orderstateDao) {
         this.orderstateDao = orderstateDao;

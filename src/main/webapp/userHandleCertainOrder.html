@@ -2,9 +2,216 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>具体订单</title>
 </head>
 <body>
-
+<div id="orderInfo"></div>
+<div id="buttondiv">
+    <button id="pay" onclick="payOrder()">付款</button>
+    <button id="cancel" onclick="cancelOrder()">取消订单</button>
+    <button id="arrive" onclick="arriveOrder()">确认到达</button>
+    <p id="inform"></p>
+</div>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var orderId=getRestCode();
+
+        var orderOb=new Orderid(orderId);
+
+        var restCode;
+        var packageids;
+        var packagenums;
+        var foodCodes;
+        var foodNums;
+        var totalprice;
+        var buildtime;
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadCertainOrderServlet',
+            data:orderOb,
+            async:false,
+            success:function (data) {
+                restCode=data.restCode;
+                packageids=data.packageids;
+                packagenums=data.packagenums;
+                foodCodes=data.foodCodes;
+                foodNums=data.foodNums;
+                totalprice=data.totalprice;
+                buildtime=data.buildtime;
+
+                $('#orderInfo').append('<p>'+restCode+'</p>'+
+                    '<p>'+packageids+'</p>'+
+                    '<p>'+packagenums+'</p>'+
+                    '<p>'+foodCodes+'</p>'+
+                    '<p>'+foodNums+'</p>'+
+                    '<p>'+totalprice+'</p>'+
+                    '<p>'+buildtime+'</p>')
+            },
+            error:function (e) {
+                alert("LoadCertainOrderServlet error");
+            }
+        });
+
+        var orderstate;
+        var paytime;
+        var canceltime;
+        var arrivetime;
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadCertainOrderStateServlet',
+            data:orderOb,
+            async:false,
+            success:function (data) {
+                orderstate=data.orderstate;
+                paytime=data.paytime;
+                canceltime=data.canceltime;
+                arrivetime=data.arrivetime;
+            },
+            error:function (e) {
+                alert("LoadCertainOrderStateServlet error")
+            }
+        });
+
+        if(orderstate=='未支付'){
+            if(outOfTime(buildtime)){
+                $.ajax({
+                    type:'post',
+                    dataType:'text',
+                    url:'OrderOverdueServlet',
+                    data:orderOb,
+                    async:false,
+                    success:function (data) {
+                        console.log('OrderOverdueServlet success');
+                    },
+                    error:function (e) {
+                        alert('OrderOverdueServlet error');
+                    }
+                });
+                $('#pay').hide();
+                $('#cancel').hide();
+                $('#arrive').hide();
+                $('#inform').text("该订单超过十五分钟未支付，订单已过期");
+            }
+            else {
+                $('#pay').show();
+                $('#cancel').show();
+                $('#arrive').show();
+                $('#inform').text("未支付，请尽快支付");
+            }
+        }
+        else if(orderstate=='已支付'){
+            $('#pay').hide();
+            $('#cancel').show();
+            $('#arrive').show();
+            $('#inform').text('已支付，等待商家送货');
+        }   //0未支付，1已支付，2已过期，3在路上，4已送达  5已退订
+        else if(orderstate=='已过期'){
+            $('#pay').hide();
+            $('#cancel').hide();
+            $('#arrive').hide();
+            $('#inform').text("该订单超过十五分钟未支付，订单已过期");
+        }
+        else if(orderstate=='在路上'){
+            $('#pay').hide();
+            $('#cancel').hide();
+            $('#arrive').show();
+            $('#inform').text("该订单已上路");
+        }
+        else if(orderstate=='已送达'){
+            $('#pay').hide();
+            $('#cancel').hide();
+            $('#arrive').hide();
+            $('#inform').text("该订单已送达");
+        }
+        else if(orderstate=='已退订'){
+            $('#pay').hide();
+            $('#cancel').hide();
+            $('#arrive').hide();
+            $('#inform').text("该订单已退订");
+        }
+        else{
+            alert("orderstate error");
+        }
+    });
+
+
+    function payOrder() {
+
+        var orderid=getRestCode();
+
+        var email=getcookie('email');
+
+        var ordercallOb=new OrderCall(orderid,email);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'OrderPayServlet',
+            data:ordercallOb,
+            success:function (data) {
+                alert('支付成功');
+            },
+            error:function (e) {
+                alert('OrderPayServlet error')
+            }
+        });
+
+    }
+    
+    function cancelOrder() {
+
+        var orderid=getRestCode();
+
+        var email=getcookie('email');
+
+        var ordercallOb=new OrderCall(orderid,email);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'OrderCancelServlet',
+            data:ordercallOb,
+            success:function (data) {
+                alert('退订成功');
+            },
+            error:function (e) {
+                alert('OrderCancelServlet error')
+            }
+        });
+    }
+    
+    function arriveOrder() {
+        var orderId=getRestCode();
+
+        var orderOb=new Orderid(orderId);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'OrderArriveServlet',
+            data:orderOb,
+            success:function (data) {
+                alert('退订成功');
+            },
+            error:function (e) {
+                alert('OrderArriveServlet error')
+            }
+        });
+    }
+    
+    
+    
+    function Orderid(orderid) {
+        this.orderid=orderid;
+    }
+    function OrderCall(orderid,email) {
+        this.orderid=orderid;
+        this.email=email;
+    }
+</script>
 </html>

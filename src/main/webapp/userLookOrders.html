@@ -2,9 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title></title>
 </head>
 <body>
-
+<ul id="orderList">
+</ul>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var email=getcookie('email');
+        var emailOb=new UserEmail(email);
+
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadFoodorderOfCertainUserServlet',
+            data:emailOb,
+            success:function (data) {
+                for(var p in data){
+                    var orderid=data[p].orderid;
+                    var buildtime=data[p].buildtime;
+                    var url='/userHandleCertainOrder.html?orderid='+orderid;
+                    $('#orderList').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+buildtime+'</div></li>');
+                }
+            },
+            error:function (e) {
+                alert("LoadFoodorderOfCertainUserServlet error");
+            }
+        });
+    });
+
+    function UserEmail(email) {
+        this.email=email;
+    }
+
+</script>
 </html>

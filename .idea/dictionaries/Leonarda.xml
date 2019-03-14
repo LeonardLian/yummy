@@ -1,11 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Leonarda">
     <words>
+      <w>arrivetime</w>
+      <w>buildtime</w>
+      <w>canceltime</w>
       <w>foodorder</w>
       <w>foodpackage</w>
       <w>lookrest</w>
       <w>mainpage</w>
+      <w>orderid</w>
       <w>orderstate</w>
+      <w>paytime</w>
       <w>unpay</w>
     </words>
   </dictionary>

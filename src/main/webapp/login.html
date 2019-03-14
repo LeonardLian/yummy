@@ -35,7 +35,7 @@
         <input id="password" placeholder="密码" type="password">
     </div>
     <div>
-        <button id="register" onclick="">注册</button>
+        <button id="register" onclick="restaurantRegister()">注册</button>
         <button id="restLogin" onclick="restaurantLogin()">登录</button>
     </div>
 </div>
@@ -74,7 +74,7 @@
                 alert("验证码已发送");
             },
             error:function (error) {
-                alert(error);
+                alert('EmailServlet error');
             }
         });
     }
@@ -93,6 +93,11 @@
         else {
             alert("邮箱或密码错误")
         }
+    }
+
+
+    function restaurantRegister() {
+        window.location.href='/restRegister.html';
     }
 
     function restaurantLogin() {
@@ -119,6 +124,9 @@
                     document.cookie='restCode='+restCode;
                     window.location.href='/restMainpage.html';
                 }
+            },
+            error:function (error) {
+                alert("SignInRestaurantServlet error")
             }
         })
     }

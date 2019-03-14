@@ -5,21 +5,35 @@
     <title>餐厅详情</title>
 </head>
 <body>
-<button onclick="">订餐</button>
+<button onclick="callOrder()">订餐</button>
 <div>
-    <ul id="foodList"></ul>
-</div>
-<div>
-    <ul id="foodPackageList"></ul>
+    <div>
+        <ul id="foodList"></ul>
+    </div>
+    <div>
+        <ul id="foodPackageList"></ul>
+    </div>
+    <!--<div id="callOrderDiv">-->
+        <!--<div id="food">-->
+            <!--<select id=""></select>-->
+            <!--<input type="number" placeholder="1">-->
+        <!--</div>-->
+        <!--<div id="package">-->
+            <!--<select id="packageSelect"></select>-->
+            <!--<input type="number" placeholder="1">-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="utils.js"></script>
 <script>
+
     $(function () {
         var code=getRestCode();
-        var restCode=new RestCode(code);
+        document.cookie='restCode='+code;
 
+        var restCode=new RestCode(code);
 
         var foodListJson=null;
         $.ajax({
@@ -32,25 +46,78 @@
                 foodListJson=data;
             },
             error:function (e) {
-                alert("LoadRestaurantList error");
+                alert("LoadFoodsOfCertainRestServlet error");
             }
         });
-
         for(var p in foodListJson){
             var foodid=foodListJson[p].foodid;
             var name=foodListJson[p].name;
             var price=foodListJson[p].price;
             var number=foodListJson[p].number;
+            $('#foodSelect').append('<option value="'+name+'">'+name+'</option>');
             $('#foodList').append('<li><div>'+foodid+','+name+','+price+'元,'+number+'个'+'</div></li>')
         }
 
-        var foodpackageListJson=null;
 
+        var foodpackageListJson=null;
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadFoodpackageOfCertainRestServlet',
+            data:restCode,
+            async:false,
+            success:function (data) {
+                foodpackageListJson=data;
+            },
+            error:function (e) {
+                alert("LoadFoodpackageOfCertainRestServlet error");
+            }
+        });
+        for(var i in foodpackageListJson){
+            var packageid=foodpackageListJson[i].packageid;
+            var packagename=foodpackageListJson[i].name;
+            var foodCodes=foodpackageListJson[i].foodCodes;
+            var foodNums=foodpackageListJson[i].foodNums;
+            var packageprice=foodpackageListJson[i].price;
+            $('#packageSelect').append('<option value="'+packagename+'">'+packagename+'</option>');
+            $('#foodPackageList').append('<li><div>'+packageid+','+packagename+','+foodCodes+','+foodNums+','+packageprice+'</div></li>')
+        }
     });
 
+    function callOrder() {
+
+        //////////////
+        //override 得到(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice)
+
+
+        var foodorder=new Foodorder(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'OrderCallServlet',
+            data:foodorder,
+            success:function (data) {
+                alert(data);
+            },
+            error:function (e) {
+                alert("LoadFoodsOfCertainRestServlet error");
+            }
+        });
+    }
 
     function RestCode(restCode){
         this.restCode=restCode;
+    }
+
+    function Foodorder(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice) {
+        this.email=email;
+        this.restCode=restCode;
+        this.useraddress=useraddress;
+        this.packageids=packageids;
+        this.packagenums=packagenums;
+        this.foodCodes=foodCodes;
+        this.foodNums=foodNums;
+        this.totalprice=totalprice;
     }
 </script>
 </html>

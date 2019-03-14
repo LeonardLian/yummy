@@ -33,13 +33,13 @@ public class OrderCancelServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         int orderid=Integer.parseInt(req.getParameter("orderid"));
-        String cardcode=req.getParameter("cardcode");
+        String email=req.getParameter("email");
 
         FoodorderService foodorderService=new FoodorderServiceImpl();
-        foodorderService.cancelOrder(orderid,cardcode);
+        foodorderService.cancelOrder(orderid,email);
 
         FoodorderEntity foodorderEntity=foodorderService.findCertainFoodorderByOrderId(orderid);
-        String email=foodorderEntity.getEmail();
+        //String email=foodorderEntity.getEmail();
 
         UserService userService=new UserServiceImpl();
         userService.changeUserLevel(email);

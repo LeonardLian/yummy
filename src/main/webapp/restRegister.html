@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>餐厅注册</title>
+</head>
+<body>
+<div>
+    <p id="restCode" ></p>
+    <input id="password" placeholder="密码" type="password">
+    <input id="name" placeholder="名称" type="text">
+    <input id="address" placeholder="地址" type="text">
+    <select id="kind">
+        <option value="a">自助餐</option>
+        <option value="b">快餐店</option>
+        <option value="c">大排档</option>
+        <option value="d">高档酒楼</option>
+        <option value="e">酒吧</option>
+        <option value="f">风味餐馆</option>
+    </select>
+    <button id="register" onclick="registerRest()">注册</button>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'GetRestaurantCodeServlet',
+            data:'l',
+            success:function (data) {
+                $('#restCode').text(data);
+            },
+            error:function (e) {
+                alert('GetRestaurantCodeServlet error')
+            }
+        });
+    });
+    function registerRest() {
+        var code=$('#restCode').text();
+        var password=$('#password').val();
+        var address=$('#address').val();
+        var name=$('#name').val();
+        var kind=$('#kind').find('option:selected').text();
+
+        var restaurant=new RestaurantOb(code,password,address,kind,name);
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'SignUpRestaurantServlet',
+            data:restaurant,
+            success:function (data) {
+                alert('注册成功，请等待审核，记住该注册码：'+code);
+                window.location.href='/login.html';
+            },
+            error:function (e) {
+                alert('SignUpRestaurantServlet error')
+            }
+        });
+    }
+
+
+
+    function RestaurantOb(code,password,address,kind,name){
+        this.code=code;
+        this.password=password;
+        this.address=address;
+        this.kind=kind;
+        this.name=name;
+    }
+</script>
+</html>

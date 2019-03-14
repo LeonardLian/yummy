@@ -13,6 +13,8 @@ public interface FoodorderDao {
 
     List getAllOrderOfOneUser(String email);
 
+    List getAllOrderOfOneRest(String restCode);
+
     void createFoodOrder(FoodorderEntity foodorder);
 
     FoodorderEntity retrieveOrderById(int orderId);

@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>查看订单</title>
 </head>
 <body>
-
+<ul id="order">
+</ul>
 </body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var restCode=getcookie('restCode');
+
+        var codeOb=new RestCode(restCode);
+
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadFoodorderOfCertainRestServlet',
+            data:codeOb,
+            success:function (data) {
+                for(var p in data){
+                    var orderid=data[p].orderid;
+                    var email=data[p].email;
+                    var buildtime=data[p].buildtime;
+                    var url='/restHandleCertainOrder?orderid='+orderid;
+                    $('#order').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+email+'</div><div>'+buildtime+'</div></li>')
+                }
+            },
+            error:function (e) {
+                alert('LoadFoodorderOfCertainRestServlet error')
+            }
+        })
+
+    });
+
+    function RestCode(restCode) {
+        this.restCode=restCode;
+    }
+</script>
 </html>

@@ -10,9 +10,11 @@ import com.javaee.entity.BankcardEntity;
 public interface BankcardDao {
     void createBankcard(BankcardEntity bankcard);
 
-    void updateBankcard(String cardCode, double consumeMoney, int state);
+    void updateBankcard(String email, double consumeMoney, int state);
 
     BankcardEntity retrieveByBankcardId(String cardCode);
+
+    BankcardEntity retrieveByEmail(String email);
 
     void deleteBankcard(String cardCode);
 }

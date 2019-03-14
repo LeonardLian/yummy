@@ -1,11 +1,8 @@
 package com.javaee.webAction;
 
-import com.javaee.entity.FoodorderEntity;
-import com.javaee.service.UserService;
-import com.javaee.service.impl.UserServiceImpl;
-import com.javaee.service.FoodService;
+import com.alibaba.fastjson.JSON;
+import com.javaee.entity.OrderstateEntity;
 import com.javaee.service.FoodorderService;
-import com.javaee.service.impl.FoodServiceImpl;
 import com.javaee.service.impl.FoodorderServiceImpl;
 
 import javax.servlet.ServletException;
@@ -18,10 +15,10 @@ import java.io.IOException;
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 下午11:46 2019/3/8
+ * @date: create in 下午3:09 2019/3/12
  */
-@WebServlet("/OrderPayServlet")
-public class OrderPayServlet extends HttpServlet {
+@WebServlet("/LoadCertainOrderStateServlet")
+public class LoadCertainOrderStateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -32,20 +29,11 @@ public class OrderPayServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         int orderid=Integer.parseInt(req.getParameter("orderid"));
-        String email=req.getParameter("email");
 
         FoodorderService foodorderService=new FoodorderServiceImpl();
-        foodorderService.payForOrder(orderid,email);
+        OrderstateEntity orderstateEntity=foodorderService.findCertainOrderstateByOrderId(orderid);
 
-        FoodorderEntity foodorderEntity=foodorderService.findCertainFoodorderByOrderId(orderid);
-        //String email=foodorderEntity.getEmail();
-
-        UserService userService=new UserServiceImpl();
-        userService.changeUserLevel(email);
-
-        FoodService foodService=new FoodServiceImpl();
-        foodService.changeFoodNum(foodorderEntity,0);
-
-        resp.getWriter().print("success");
+        String json = JSON.toJSONString(orderstateEntity);
+        resp.getWriter().print(json);
     }
 }
