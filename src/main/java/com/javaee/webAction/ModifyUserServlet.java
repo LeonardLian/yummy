@@ -28,7 +28,7 @@ public class ModifyUserServlet extends HttpServlet {
         String username=req.getParameter("username");
         String phone=req.getParameter("phone");
         String name=req.getParameter("name");
-        String address=req.getParameter("address");
+        String address=req.getParameter("addresses");
 
         new UserServiceImpl().updateUser(username,phone,name,address);
 

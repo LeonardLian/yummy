@@ -2,9 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>用户统计</title>
 </head>
 <body>
-
+<div id="chart1" style="width: 600px; height: 400px"></div>
+<div id="chart2" style="width: 600px; height: 400px"></div>
 </body>
+<script src="jquery.js"></script>
+<script src="echarts.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var username=getcookie('username');
+        var usernameOb=new Username(username);
+
+        var dta=null;
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'LoadFoodorderOfCertainUserServlet',
+            data:usernameOb,
+            async:false,
+            success:function (data) {
+                dta=eval('('+data+')');
+            },
+            error:function (e) {
+                alert("LoadFoodorderOfCertainUserServlet error");
+            }
+        });
+
+
+        var chart1=echarts.init(document.getElementById('chart1'));
+        var chart1_time=[];
+        var chart1_cost=[];
+        for(var p in dta) {
+            var totalprice = dta[p].totalprice;
+            var buildtime = dta[p].buildtime;
+            chart1_cost.push(totalprice);
+            chart1_time.push(buildtime);
+        }
+        var chart1_option={
+            title:{
+                text: '消费历史'
+            },
+            xAxis:{
+                type:'category',
+                data:chart1_time
+            },
+            yAxis:{
+                type:'value'
+            },
+            tooltip:{
+            },
+            series:[{
+                data:chart1_cost,
+                type:'line'
+            }]
+        }
+        chart1.setOption(chart1_option);
+
+
+        var chart2=echarts.init(document.getElementById('chart2'));
+        var chart2_rest=[];
+        var chart2_cost=[];
+        for(var j in dta) {
+            var price = dta[j].totalprice;
+            var restCode = dta[j].restCode;
+
+            var index=chart2_rest.indexOf(restCode);
+            if(index != -1){
+                chart2_cost[index]=(chart2_cost[index]-0)+(price-0);
+            } else {
+                chart2_cost.push(totalprice);
+                chart2_rest.push(restCode);
+            }
+        }
+        var chart2_option={
+            title:{
+                text: '餐厅消费'
+            },
+            xAxis:{
+                type:'category',
+                data:chart2_rest
+            },
+            yAxis:{
+                type:'value'
+            },
+            tooltip:{
+            },
+            series:[{
+                data:chart2_cost,
+                type:'bar'
+            }]
+        }
+        chart2.setOption(chart2_option);
+
+    });
+
+
+
+
+    function Username(username) {
+        this.username=username;
+    }
+</script>
 </html>

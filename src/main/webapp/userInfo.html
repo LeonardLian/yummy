@@ -5,11 +5,25 @@
     <title>用户信息</title>
 </head>
 <body>
-<input id="phone" type="number">
-<input id="name" type="text">
-<input id="address" type="text">
-<button onclick="submitChange()">修改</button>
-<button onclick="cancelit()">取消</button>
+<div>
+    电话：<input id="phone" type="number">
+</div>
+<div>
+    姓名：<input id="name" type="text">
+</div>
+<div>
+    地址：<input id="address" type="text">
+</div>
+<div>
+    余额：<p id="money"></p>
+</div>
+<div>
+    等级：<p id="level"></p>
+</div>
+<div>
+    <button onclick="submitChange()">修改</button>
+    <button onclick="cancelit()">取消</button>
+</div>
 </body>
 <script src="jquery.js"></script>
 <script src="utils.js"></script>
@@ -27,9 +41,13 @@
                 var name=data.name;
                 var addresses=data.addresses;
                 var phone=data.phone;
+                var leftmoney=data.leftmoney;
+                var level=data.level;
                 $('#name').val(name);
                 $('#address').val(addresses);
                 $('#phone').val(phone);
+                $('#money').text(leftmoney);
+                $('#level').text(level);
             },
             error:function () {
                 alert('LoadUserInfoServlet error');
@@ -51,6 +69,7 @@
             data:user,
             success:function (data) {
                 alert("修改成功");
+                window.location.href='/userMainpage.html';
             },
             error:function (e) {
                 alert('RestModifyServlet error');

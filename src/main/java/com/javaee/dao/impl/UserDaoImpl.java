@@ -25,7 +25,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
         userEntity1.setAddresses(addresses);
         userEntity1.setName(name);
         userEntity1.setLevel(0);
-        userEntity1.setLeftmoney(1000.0);
+        userEntity1.setLeftmoney(20000.0);
         this.getHibernateTemplate().save(userEntity1);
     }
 

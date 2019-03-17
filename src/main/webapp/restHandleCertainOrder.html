@@ -92,6 +92,7 @@
             data:orderOb,
             success:function (data) {
                 alert('该订单已上路');
+                window.location.href='/restLookOrders.html';
             },
             error:function (e) {
                 alert('OrderOnRoadServlet error');

@@ -8,6 +8,7 @@
 <div>
     <button onclick="modifyUserInfo()">完善个人信息</button>
     <button onclick="gotoOrders()">查看订单</button>
+    <button onclick="userStats()">用户统计</button>
     <button onclick="cancelit()">退出</button>
 </div>
 <div>
@@ -18,6 +19,24 @@
 <script src="utils.js"></script>
 <script>
     $(function () {
+        var username=getcookie('username');
+        var usernameOb=new UsernameOb(username);
+
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url:'LoadUserInfoServlet',
+            data:usernameOb,
+            success:function (data) {
+                var level=data.level;
+
+                document.cookie='level='+level;
+            },
+            error:function () {
+                alert('LoadUserInfoServlet error');
+            }
+        });
+
         var listJson=null;
         $.ajax({
             type:'post',
@@ -54,11 +73,20 @@
     }
 
     function gotoOrders() {
-        window.location.href='/userLookOrders.html'
+        window.location.href='/userLookOrders.html';
+    }
+
+    function userStats() {
+        window.location.href='/statsUser.html';
     }
 
     function cancelit() {
         window.location.href='/login.html';
+    }
+
+
+    function UsernameOb(username) {
+        this.username=username;
     }
 </script>
 </html>

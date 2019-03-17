@@ -151,6 +151,7 @@
             data:ordercallOb,
             success:function (data) {
                 alert('支付成功');
+                window.location.href='/userLookOrders.html';
             },
             error:function (e) {
                 alert('OrderPayServlet error')
@@ -174,6 +175,7 @@
             data:ordercallOb,
             success:function (data) {
                 alert('退订成功');
+                window.location.href='/userLookOrders.html';
             },
             error:function (e) {
                 alert('OrderCancelServlet error')
@@ -193,6 +195,7 @@
             data:orderOb,
             success:function (data) {
                 alert('订单已到达');
+                window.location.href='/userLookOrders.html';
             },
             error:function (e) {
                 alert('OrderArriveServlet error')

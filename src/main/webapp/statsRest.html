@@ -2,9 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>餐厅统计</title>
 </head>
 <body>
-
+<div id="chart1" style="width: 600px; height: 400px"></div>
+<div id="chart2" style="width: 600px; height: 400px"></div>
 </body>
+<script src="jquery.js"></script>
+<script src="echarts.js"></script>
+<script src="utils.js"></script>
+<script>
+    $(function () {
+        var restCode=getcookie('restCode');
+
+        var codeOb=new RestCode(restCode);
+
+        var dta=null;
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'LoadFoodorderOfCertainRestServlet',
+            data:codeOb,
+            async:false,
+            success:function (data) {
+                dta=eval('('+data+')');
+            },
+            error:function (e) {
+                alert('LoadFoodorderOfCertainRestServlet error')
+            }
+        });
+
+
+        var chart1=echarts.init(document.getElementById('chart1'));
+        var chart1_packageids=[];
+        var chart1_packagenums=[];
+        for(var p in dta) {
+            var packageids=(dta[p].packageids).split(' ');
+            var packagenums=(dta[p].packagenums).split(' ');
+            for(var j in packageids){
+                var index=chart1_packageids.indexOf(packageids[j]);
+                if(index!=-1){
+                    chart1_packagenums[index]=(chart1_packagenums[index]-0)+(packagenums[j]-0);
+                }
+                else{
+                    chart1_packageids.push(packageids[j]);
+                    chart1_packagenums.push(packagenums[j]);
+                }
+            }
+        }
+        var chart1_data=[];
+        for(var i in chart1_packageids){
+            chart1_data.push({value:chart1_packagenums[i],name:chart1_packageids[i]});
+        }
+
+        var chart1_option={
+            title:{
+                text: '套餐畅销'
+            },
+            tooltip:{
+                trigger: 'item',
+                formatter:"{a}<br/>{b} : {c} ({d}%)"
+            },
+            series:[{
+                name:'套餐id',
+                type:'pie',
+                radius:'55%',
+                center:['50%', '60%'],
+                data:chart1_data,
+                itemStyle:{
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+        chart1.setOption(chart1_option);
+
+
+        var chart2=echarts.init(document.getElementById('chart2'));
+        var chart2_foodCodes=[];
+        var chart2_foodNums=[];
+        for(var p in dta) {
+            var foodCodes=(dta[p].foodCodes).split(' ');
+            var foodNums=(dta[p].foodNums).split(' ');
+            for(var w in foodCodes){
+                var index=chart2_foodCodes.indexOf(foodCodes[w]);
+                if(index!=-1){
+                    chart2_foodNums[index]=(chart2_foodNums[index]-0)+(foodNums[w]-0);
+                }
+                else{
+                    chart2_foodCodes.push(foodCodes[w]);
+                    chart2_foodNums.push(foodNums[w]);
+                }
+            }
+        }
+        var chart2_data=[];
+        for(var i in chart2_foodCodes){
+            chart2_data.push({value:chart2_foodNums[i],name:chart2_foodCodes[i]});
+        }
+
+        var chart2_option={
+            title:{
+                text: '菜品畅销'
+            },
+            tooltip:{
+                trigger: 'item',
+                formatter:"{a}<br/>{b} : {c} ({d}%)"
+            },
+            series:[{
+                name:'菜品id',
+                type:'pie',
+                radius:'55%',
+                center:['50%', '60%'],
+                data:chart2_data,
+                itemStyle:{
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };
+        chart2.setOption(chart2_option);
+
+    });
+
+    function RestCode(restCode) {
+        this.restCode=restCode;
+    }
+</script>
 </html>

@@ -97,21 +97,26 @@
     function generateFoodOption(){
         $('#foodarr').empty();
         var num=$('#food').val();
-        for(var i=1;i<=num;i++){
-            var id='food'+i;
-            var numid='foodnum'+i;
 
-            $('#foodarr').append('<div>' +
-                '<select id="'+id+'" >' +
-                '</select>' +
-                '<input id="'+numid+'" type="number" placeholder="数量">' +
-                '</div>');
+        if(num==0){
+        }
+        else {
+            for (var i = 1; i <= num; i++) {
+                var id = 'food' + i;
+                var numid = 'foodnum' + i;
 
-            var foodList=eval('('+getcookie('foodListJson')+')');
+                $('#foodarr').append('<div>' +
+                    '<select id="' + id + '" >' +
+                    '</select>' +
+                    '<input id="' + numid + '" type="number" placeholder="数量">' +
+                    '</div>');
 
-            for(var p in foodList){
-                var food=foodList[p].foodid+':'+foodList[p].name+':'+foodList[p].price;
-                $('#'+id).append('<option value="'+food+'">'+food+'</option>');
+                var foodList = eval('(' + getcookie('foodListJson') + ')');
+
+                for (var p in foodList) {
+                    var food = foodList[p].foodid + ':' + foodList[p].name + ':' + foodList[p].price;
+                    $('#' + id).append('<option value="' + food + '">' + food + '</option>');
+                }
             }
         }
     }
@@ -119,21 +124,25 @@
     function generatePackageOption() {
         $('#packagearr').empty();
         var num=$('#package').val();
-        for(var i=1;i<=num;i++){
-            var id='package'+i;
-            var numid='packagenum'+i;
 
-            $('#packagearr').append('<div>' +
-                '<select id="'+id+'" >' +
-                '</select>' +
-                '<input id="'+numid+'" type="number" placeholder="数量">' +
-                '</div>');
+        if(num==0){}
+        else {
+            for (var i = 1; i <= num; i++) {
+                var id = 'package' + i;
+                var numid = 'packagenum' + i;
 
-            var packageList=eval('('+getcookie('foodpackageListJson')+')');
+                $('#packagearr').append('<div>' +
+                    '<select id="' + id + '" >' +
+                    '</select>' +
+                    '<input id="' + numid + '" type="number" placeholder="数量">' +
+                    '</div>');
 
-            for(var p in packageList){
-                var package=packageList[p].packageid+':'+packageList[p].name+':'+packageList[p].price;
-                $('#'+id).append('<option value="'+package+'">'+package+'</option>');
+                var packageList = eval('(' + getcookie('foodpackageListJson') + ')');
+
+                for (var p in packageList) {
+                    var package = packageList[p].packageid + ':' + packageList[p].name + ':' + packageList[p].price;
+                    $('#' + id).append('<option value="' + package + '">' + package + '</option>');
+                }
             }
         }
     }
@@ -146,46 +155,74 @@
         var restCode=getRestCode();
         var useraddress=$('#address').val();
 
+
+
         var foodcodelist=[];
         var foodnumlist=[];
 
         var totalprice=0;
 
         var foodnum=$('#food').val();
-        for(var i=1;i<=foodnum;i++){
-            var list=($('#food'+i).find('option:selected').text()).split(':');
-            foodcodelist.push(list[0]);
 
-            var number=$('#foodnum'+i).val();
-            foodnumlist.push(number);
+        var foodCodes;
+        var foodNums;
 
-            totalprice=totalprice+list[2]*number;
+        if(foodnum==0){
+            foodCodes='1';
+            foodNums='0';
+        }
+        else {
+            for (var i = 1; i <= foodnum; i++) {
+                var list = ($('#food' + i).find('option:selected').text()).split(':');
+                foodcodelist.push(list[0]);
+
+                var number = $('#foodnum' + i).val();
+                foodnumlist.push(number);
+
+                totalprice = totalprice + list[2] * number;
+            }
+            foodCodes = foodcodelist.join(' ');
+            foodNums = foodnumlist.join(' ');
         }
 
-        var foodCodes=foodcodelist.join(' ');
-        var foodNums=foodnumlist.join(' ');
 
 
 
         var packagecodelist=[];
         var packagenumlist=[];
         var packagenum=$('#package').val();
-        for(var j=1;j<=packagenum;j++){
-            var list1=($('#package'+j).find('option:selected').text()).split(':');
-            packagecodelist.push(list1[0]);
 
-            var number1=$('#packagenum'+j).val();
-            packagenumlist.push(number1);
+        var packageids;
+        var packagenums;
 
-            totalprice=totalprice+list1[2]*number1;
+        if(packagenum==0){
+            packageids='1';
+            packagenums='0';
+        }
+        else {
+            for (var j = 1; j <= packagenum; j++) {
+                var list1 = ($('#package' + j).find('option:selected').text()).split(':');
+                packagecodelist.push(list1[0]);
+
+                var number1 = $('#packagenum' + j).val();
+                packagenumlist.push(number1);
+
+                totalprice = totalprice + list1[2] * number1;
+            }
+
+            packageids = packagecodelist.join(' ');
+            packagenums = packagenumlist.join(' ');
         }
 
-        var packageids=packagecodelist.join(' ');
-        var packagenums=packagenumlist.join(' ');
-        //////////////
-        //override 得到(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice)
+        var level=getcookie('level');
+        var percent=1-0.02*level;
+        if(percent<0.7){
+            percent=0.7;
+        }
 
-        var foodorder=new Foodorder(username,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice);
+        var nowprice=totalprice*percent;
+
+        var foodorder=new Foodorder(username,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,nowprice);
 
         $.ajax({
             type:'post',
@@ -193,7 +230,7 @@
             url:'OrderCallServlet',
             data:foodorder,
             success:function (data) {
-                alert("下单成功");
+                alert("下单成功, 原价"+totalprice+"元，会员降价为"+nowprice+"元");
                 window.location.href='/userMainpage.html';
             },
             error:function (e) {

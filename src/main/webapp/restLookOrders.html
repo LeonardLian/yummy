@@ -22,10 +22,11 @@
             url:'LoadFoodorderOfCertainRestServlet',
             data:codeOb,
             success:function (data) {
-                for(var p in data){
-                    var orderid=data[p].orderid;
-                    var username=data[p].username;
-                    var buildtime=data[p].buildtime;
+                var dta=eval('('+data+')');
+                for(var p in dta){
+                    var orderid=dta[p].orderid;
+                    var username=dta[p].username;
+                    var buildtime=dta[p].buildtime;
                     var url='/restHandleCertainOrder.html?orderid='+orderid;
                     $('#order').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+username+'</div><div>'+buildtime+'</div></li>')
                 }

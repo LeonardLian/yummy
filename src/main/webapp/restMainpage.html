@@ -8,6 +8,7 @@
 <button onclick="restinfo()">餐厅信息</button>
 <button onclick="restrelease()">发布信息</button>
 <button onclick="restHandle()">查看订单</button>
+<button onclick="restStats()">餐厅统计</button>
 </body>
 <script>
     function restinfo() {
@@ -18,6 +19,9 @@
     }
     function restHandle() {
         window.location.href='/restLookOrders.html';
+    }
+    function restStats() {
+        window.location.href='/statsRest.html';
     }
 </script>
 </html>
