@@ -9,13 +9,17 @@ import com.javaee.entity.UserEntity;
  */
 public interface UserService {
 
-    void addOrModifyUser(String email,String phone,String name,String address,String cardcode);
+    void addUser(String username, String password, String email, String phone, String name,String address);
 
-    void deleteUser(String email);
+    void updateUser(String username, String phone, String name, String addresses);
 
-    void changeUserLevel(String email);
+    void deleteUser(String username);
 
-    UserEntity findCertainUserByUserEmail(String email);
+    void changeUserLevel(String username);
+
+    boolean judgeUserPassword(String username,String password);
+
+    UserEntity findCertainUserByUsername(String username);
 
     String generateRandomEmailCode();
 }

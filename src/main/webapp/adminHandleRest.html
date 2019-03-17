@@ -8,12 +8,12 @@
 <button onclick="agree()">同意</button>
 <button onclick="disagree()">不同意</button>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     function agree() {
         var code=getRestCode();
-        var ob=new ob(code,1);
+        var ob=new checkOb(code,1);
         $.ajax({
             type:'post',
             dataType:'text',
@@ -31,7 +31,7 @@
 
     function disagree() {
         var code=getRestCode();
-        var ob=new ob(code,2);
+        var ob=new checkOb(code,2);
         $.ajax({
             type:'post',
             dataType:'text',
@@ -47,7 +47,7 @@
         })
     }
 
-    function ob(restCode,result) {
+    function checkOb(restCode,result) {
         this.restCode=restCode;
         this.result=result;
     }

@@ -76,6 +76,9 @@ public class EmailServlet extends HttpServlet{
 
 
         System.out.println(code);
+
+        resp.setCharacterEncoding("utf-8");
+
         resp.getWriter().print(code);
 
 //        FoodEntity foodEntity=new FoodEntity();

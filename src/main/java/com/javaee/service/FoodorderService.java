@@ -18,9 +18,9 @@ public interface FoodorderService {
 
     void callOrder(FoodorderEntity foodorder);
 
-    void cancelOrder(int orderId, String email);
+    void cancelOrder(int orderId, String username);
 
-    void payForOrder(int orderId, String email);
+    void payForOrder(int orderId, String username);
 
     void arriveForOrder(int orderId);
 
@@ -28,7 +28,7 @@ public interface FoodorderService {
 
     void OnRoadForOrder(int orderId);
 
-    List getAllOrderOfOneUser(String email);
+    List getAllOrderOfOneUser(String username);
 
     List getAllOrderOfOneRest(String restCode);
 }

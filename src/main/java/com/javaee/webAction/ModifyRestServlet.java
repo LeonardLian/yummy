@@ -35,6 +35,7 @@ public class ModifyRestServlet extends HttpServlet {
         RestaurantService restaurantService=new RestaurantServiceimpl();
         restaurantService.updateRestaurant(restCode,name,address,kind);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

@@ -1,9 +1,12 @@
 package com.javaee.service.impl;
 
+
 import com.javaee.dao.FoodpackageDao;
 import com.javaee.dao.RestaurantDao;
 import com.javaee.entity.FoodpackageEntity;
 import com.javaee.service.FoodpackageService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -14,8 +17,12 @@ import java.util.List;
  */
 public class FoodpackageServiceImpl implements FoodpackageService{
 
-    FoodpackageDao foodpackageDao;
-    RestaurantDao restaurantDao;
+    private ApplicationContext applicationContext=
+            new ClassPathXmlApplicationContext("config.xml");
+
+    private FoodpackageDao foodpackageDao=(FoodpackageDao) applicationContext.getBean("foodpackageDao");
+    private RestaurantDao restaurantDao=(RestaurantDao)applicationContext.getBean("restaurantDao");
+
     //发布新套餐
     public void releaseFoodpackage(FoodpackageEntity foodpackage) {
         foodpackageDao.createFoodpackage(foodpackage);
@@ -27,20 +34,4 @@ public class FoodpackageServiceImpl implements FoodpackageService{
     }
 
 
-
-    public void setFoodpackageDao(FoodpackageDao foodpackageDao) {
-        this.foodpackageDao = foodpackageDao;
-    }
-
-    public FoodpackageDao getFoodpackageDao() {
-        return foodpackageDao;
-    }
-
-    public RestaurantDao getRestaurantDao() {
-        return restaurantDao;
-    }
-
-    public void setRestaurantDao(RestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
-    }
 }

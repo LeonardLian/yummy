@@ -28,12 +28,14 @@ public class LoadFoodorderOfCertainUserServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
 
-        String email=req.getParameter("email");
+        String username=req.getParameter("username");
 
         FoodorderService foodorderService=new FoodorderServiceImpl();
-        List list=foodorderService.getAllOrderOfOneUser(email);
+        List list=foodorderService.getAllOrderOfOneUser(username);
 
         String json= JSON.toJSONString(list);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

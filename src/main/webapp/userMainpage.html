@@ -8,36 +8,40 @@
 <div>
     <button onclick="modifyUserInfo()">完善个人信息</button>
     <button onclick="gotoOrders()">查看订单</button>
+    <button onclick="cancelit()">退出</button>
 </div>
 <div>
     <ul id="restList"></ul>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     $(function () {
         var listJson=null;
         $.ajax({
             type:'post',
-            dataType:'json',
+            dataType:'text',
             url:'LoadRestaurantListServlet',
             data:'callLIst',
             async:false,
             success:function (data) {
-                listJson=data;
+                //alert(data)
+                listJson = data;
             },
             error:function (e) {
                 alert("LoadRestaurantListServlet error");
             }
         });
 
-        for (var p in listJson){
-            var code=listJson[p].code;
-//        var address=listJson[p].address;
-            var kind=listJson[p].kind;
-            var name=listJson[p].name;
-            if(listJson[p].state==1){
+        var list=listJson=eval('('+listJson+')');
+
+        for (var p in list){
+            var code=list[p].code;
+//          var address=listJson[p].address;
+            var kind=list[p].kind;
+            var name=list[p].name;
+            if(list[p].state==1){
                 var url='/userLookrest.html?code='+code;
                 $('#restList').append('<li><div><a href="'+url+'">'+name+'</a></div><div>'+kind+'</div></li>')
             }
@@ -51,6 +55,10 @@
 
     function gotoOrders() {
         window.location.href='/userLookOrders.html'
+    }
+
+    function cancelit() {
+        window.location.href='/login.html';
     }
 </script>
 </html>

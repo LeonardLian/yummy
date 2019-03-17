@@ -10,7 +10,7 @@
     <button id="onroad" onclick="onroad()">确认订单已上路</button>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     $(function () {
@@ -18,7 +18,7 @@
 
         var orderOb=new OrderIdob(orderId);
 
-        var email;
+        var username;
         var packageids;
         var packagenums;
         var foodCodes;
@@ -32,7 +32,7 @@
             data:orderOb,
             async:false,
             success:function (data) {
-                email=data.email;
+                username=data.username;
                 packageids=data.packageids;
                 packagenums=data.packagenums;
                 foodCodes=data.foodCodes;
@@ -40,12 +40,8 @@
                 totalprice=data.totalprice;
                 buildtime=data.buildtime;
 
-                $('#orderInfo').append('<p>'+email+'</p>'+
-                    '<p>'+packageids+'</p>'+
-                    '<p>'+packagenums+'</p>'+
-                    '<p>'+foodCodes+'</p>'+
-                    '<p>'+foodNums+'</p>'+
-                    '<p>'+totalprice+'</p>'+
+                $('#orderInfo').append('<p>'+username+'</p>'+
+                    '<p>共'+totalprice+'元</p>'+
                     '<p>'+buildtime+'</p>')
             },
             error:function (e) {
@@ -64,6 +60,7 @@
             data:orderOb,
             async:false,
             success:function (data) {
+                //alert(data);
                 orderstate=data.orderstate;
                 paytime=data.paytime;
                 canceltime=data.canceltime;
@@ -79,6 +76,7 @@
         }
         else {
             $('#onroad').hide();
+            $('#orderInfo').append('<p>该订单已过期或已取消</p>')
         }
     });
 

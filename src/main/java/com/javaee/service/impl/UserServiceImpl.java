@@ -8,6 +8,8 @@ import com.javaee.entity.OrderstateEntity;
 import com.javaee.entity.UserEntity;
 import com.javaee.service.UserService;
 import com.javaee.utility.EntityUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -18,12 +20,21 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao;
-    FoodorderDao foodorderDao;
-    OrderstateDao orderstateDao;
-    //完善用户信息
-    public void addOrModifyUser(String email,String phone,String name,String address,String cardcode) {
-        userDao.createOrModifyUser(email,phone,name,address,cardcode);
+    private ApplicationContext applicationContext=
+            new ClassPathXmlApplicationContext("config.xml");
+
+    private UserDao userDao=(UserDao)applicationContext.getBean("userDao");
+    private FoodorderDao foodorderDao=(FoodorderDao)applicationContext.getBean("foodorderDao");
+    private OrderstateDao orderstateDao=(OrderstateDao)applicationContext.getBean("orderstateDao");
+
+    //添加用户
+    public void addUser(String username, String password, String email, String phone, String name, String address) {
+        userDao.createUser(username,password,email,phone,name,address);
+    }
+
+    //更新用户信息
+    public void updateUser(String username, String phone, String name, String addresses) {
+        userDao.updateUser(username,phone,name,addresses);
     }
 
     //注销用户
@@ -31,11 +42,17 @@ public class UserServiceImpl implements UserService {
         userDao.deleteUser(email);
     }
 
+    //判断登录密码
+    public boolean judgeUserPassword(String username, String password) {
+        UserEntity userEntity=userDao.retrieveByUsername(username);
+        String correctPassword=userEntity.getPassword();
+        return correctPassword.equals(password);
+    }
 
     //修改用户等级 0未支付，1已支付，2已过期，3在路上，4已送达  5已退订
-    public void changeUserLevel(String email) {
+    public void changeUserLevel(String username) {
         double cost=0;
-        List orderList=foodorderDao.getAllOrderOfOneUser(email);
+        List orderList=foodorderDao.getAllOrderOfOneUser(username);
         for (int i=0;i<orderList.size();i++){
 
             FoodorderEntity foodorder=(FoodorderEntity)orderList.get(i);
@@ -50,43 +67,17 @@ public class UserServiceImpl implements UserService {
             else {}
 
             int newLevel=(int)(cost/100);
-            userDao.changeUserLevel(email,newLevel);
+            userDao.changeUserLevel(username,newLevel);
         }
     }
 
     //检索特定用户的信息
-    public UserEntity findCertainUserByUserEmail(String email) {
-        return userDao.retrieveByUserEmail(email);
+    public UserEntity findCertainUserByUsername(String username) {
+        return userDao.retrieveByUsername(username);
     }
 
     //生成邮箱验证码
     public String generateRandomEmailCode() {
         return EntityUtils.randomCodeGenerater();
-    }
-
-
-
-    public void setFoodorderDao(FoodorderDao foodorderDao) {
-        this.foodorderDao = foodorderDao;
-    }
-
-    public FoodorderDao getFoodorderDao() {
-        return foodorderDao;
-    }
-
-    public OrderstateDao getOrderstateDao() {
-        return orderstateDao;
-    }
-
-    public void setOrderstateDao(OrderstateDao orderstateDao) {
-        this.orderstateDao = orderstateDao;
-    }
-
-    public UserDao getUserDao() {
-        return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
     }
 }

@@ -30,7 +30,7 @@ public class OrderCallServlet extends HttpServlet {
 
         FoodorderEntity foodorderEntity=new FoodorderEntity();
 
-        foodorderEntity.setEmail(req.getParameter("email"));
+        foodorderEntity.setUsername(req.getParameter("username"));
         foodorderEntity.setRestCode(req.getParameter("restCode"));
         foodorderEntity.setUseraddress(req.getParameter("useraddress"));
         foodorderEntity.setPackageids(req.getParameter("packageids"));
@@ -43,6 +43,7 @@ public class OrderCallServlet extends HttpServlet {
         FoodorderService foodorderService=new FoodorderServiceImpl();
         foodorderService.callOrder(foodorderEntity);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

@@ -9,12 +9,16 @@ import com.javaee.entity.UserEntity;
  */
 public interface UserDao {
 
-    void createOrModifyUser(String email,String phone,String name,String addresses,String cardcode);
+    void createUser(String username, String password, String email, String phone, String name, String addresses);
 
-    UserEntity retrieveByUserEmail(String email);
+    void updateUser(String username, String phone, String name, String addresses );
 
-    void deleteUser(String email);
+    UserEntity retrieveByUsername(String username);
 
-    void changeUserLevel(String email, int newLevel);
+    void deleteUser(String username);
+
+    void changeUserLevel(String username, int newLevel);
+
+    void changeMoney(String username, double consumeMoney, int state);
 
 }

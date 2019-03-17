@@ -5,10 +5,13 @@
 <hibernate-mapping>
 
     <class name="com.javaee.entity.UserEntity" table="user" schema="yummy">
-        <id name="email" column="email"/>
+        <id name="username" column="username"/>
+        <property name="email" column="email"/>
         <property name="phone" column="phone"/>
         <property name="name" column="name"/>
         <property name="addresses" column="addresses"/>
         <property name="level" column="level"/>
+        <property name="password" column="password"/>
+        <property name="leftmoney" column="leftmoney"/>
     </class>
 </hibernate-mapping>

@@ -32,20 +32,21 @@ public class OrderPayServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         int orderid=Integer.parseInt(req.getParameter("orderid"));
-        String email=req.getParameter("email");
+        String username=req.getParameter("username");
 
         FoodorderService foodorderService=new FoodorderServiceImpl();
-        foodorderService.payForOrder(orderid,email);
+        foodorderService.payForOrder(orderid,username);
 
         FoodorderEntity foodorderEntity=foodorderService.findCertainFoodorderByOrderId(orderid);
         //String email=foodorderEntity.getEmail();
 
         UserService userService=new UserServiceImpl();
-        userService.changeUserLevel(email);
+        userService.changeUserLevel(username);
 
         FoodService foodService=new FoodServiceImpl();
         foodService.changeFoodNum(foodorderEntity,0);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

@@ -31,6 +31,7 @@ public class OrderOverdueServlet extends HttpServlet{
         FoodorderService foodorderService=new FoodorderServiceImpl();
         foodorderService.overdueForOrder(orderid);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

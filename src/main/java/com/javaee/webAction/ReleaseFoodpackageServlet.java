@@ -37,6 +37,7 @@ public class ReleaseFoodpackageServlet extends HttpServlet{
         FoodpackageService foodpackageService=new FoodpackageServiceImpl();
         foodpackageService.releaseFoodpackage(foodpackageEntity);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

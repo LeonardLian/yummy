@@ -25,6 +25,8 @@ public class GetRestaurantCodeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code= EntityUtils.randomCodeGenerater();
 
+        resp.setCharacterEncoding("utf-8");
+
         resp.getWriter().print(code);
     }
 }

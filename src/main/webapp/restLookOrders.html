@@ -8,7 +8,7 @@
 <ul id="order">
 </ul>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     $(function () {
@@ -24,10 +24,10 @@
             success:function (data) {
                 for(var p in data){
                     var orderid=data[p].orderid;
-                    var email=data[p].email;
+                    var username=data[p].username;
                     var buildtime=data[p].buildtime;
-                    var url='/restHandleCertainOrder?orderid='+orderid;
-                    $('#order').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+email+'</div><div>'+buildtime+'</div></li>')
+                    var url='/restHandleCertainOrder.html?orderid='+orderid;
+                    $('#order').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+username+'</div><div>'+buildtime+'</div></li>')
                 }
             },
             error:function (e) {

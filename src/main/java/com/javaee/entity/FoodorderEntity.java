@@ -5,38 +5,34 @@ import com.alibaba.fastjson.annotation.JSONField;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 上午9:32 2019/3/5
+ * @date: create in 下午7:16 2019/3/16
  */
 @Entity
 @Table(name = "foodorder", schema = "yummy")
 public class FoodorderEntity {
 
-    @JSONField(name="orderid")
+    @JSONField(name = "orderid")
     private int orderid;
 
-    @JSONField(name = "email")
-    private String email;
-
-    @JSONField(name="restCode")
+    @JSONField(name = "restCode")
     private String restCode;
 
-    @JSONField(name="useraddress")
+    @JSONField(name = "useraddress")
     private String useraddress;
 
-    @JSONField(name="packageids")
+    @JSONField(name = "packageids")
     private String packageids;
 
-    @JSONField(name="packagenums")
+    @JSONField(name = "packagenums")
     private String packagenums;
 
-    @JSONField(name="foodCodes")
+    @JSONField(name = "foodCodes")
     private String foodCodes;
 
-    @JSONField(name="foodNums")
+    @JSONField(name = "foodNums")
     private String foodNums;
 
     @JSONField(name = "totalprice")
@@ -44,6 +40,9 @@ public class FoodorderEntity {
 
     @JSONField(name = "buildtime", format = "yyyy-MM-dd HH:mm:ss")
     private Timestamp buildtime;
+
+    @JSONField(name = "username")
+    private String username;
 
     @Id
     @Column(name = "orderid")
@@ -53,16 +52,6 @@ public class FoodorderEntity {
 
     public void setOrderid(int orderid) {
         this.orderid = orderid;
-    }
-
-    @Basic
-    @Column(name = "email")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Basic
@@ -145,25 +134,35 @@ public class FoodorderEntity {
         this.buildtime = buildtime;
     }
 
+    @Basic
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FoodorderEntity that = (FoodorderEntity) o;
         return orderid == that.orderid &&
-                email.equals(that.email) &&
                 Double.compare(that.totalprice, totalprice) == 0 &&
                 restCode.equals(that.restCode) &&
                 useraddress.equals(that.useraddress) &&
                 packageids.equals(that.packageids) &&
                 packagenums.equals(that.packagenums) &&
                 foodCodes.equals(that.foodCodes) &&
-                foodNums.equals(that.foodNums);
+                foodNums.equals(that.foodNums) &&
+                buildtime.equals(that.buildtime) &&
+                username.equals(that.username);
     }
 
 //    @Override
 //    public int hashCode() {
-//        return Objects.hash(orderid, userid, restCode, useraddress, packageids, packagenums, foodCodes, foodNums, totalprice);
+//        return Objects.hash(orderid, restCode, useraddress, packageids, packagenums, foodCodes, foodNums, totalprice, buildtime, username);
 //    }
-
 }

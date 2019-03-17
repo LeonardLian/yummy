@@ -34,6 +34,8 @@ public class LoadRestaurantInfoServlet extends HttpServlet {
         RestaurantEntity restaurantEntity=restaurantService.retrieveByrestCode(restCode);
 
         String json= JSON.toJSONString(restaurantEntity);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

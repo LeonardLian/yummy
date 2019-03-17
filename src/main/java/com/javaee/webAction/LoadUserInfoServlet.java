@@ -31,12 +31,14 @@ public class LoadUserInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
 
-        String email=req.getParameter("email");
+        String username=req.getParameter("username");
 
         UserService userService=new UserServiceImpl();
-        UserEntity userEntity=userService.findCertainUserByUserEmail(email);
+        UserEntity userEntity=userService.findCertainUserByUsername(username);
 
         String json= JSON.toJSONString(userEntity);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

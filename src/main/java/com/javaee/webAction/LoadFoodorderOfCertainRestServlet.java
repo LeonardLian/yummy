@@ -34,6 +34,8 @@ public class LoadFoodorderOfCertainRestServlet extends HttpServlet{
         List list=foodorderService.getAllOrderOfOneRest(restCode);
 
         String json= JSON.toJSONString(list);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

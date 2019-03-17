@@ -7,7 +7,7 @@ import javax.persistence.*;
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 下午7:27 2019/3/10
+ * @date: create in 下午7:16 2019/3/16
  */
 @Entity
 @Table(name = "user", schema = "yummy")
@@ -28,7 +28,16 @@ public class UserEntity {
     @JSONField(name = "level")
     private int level;
 
-    @Id
+    @JSONField(name = "username")
+    private String username;
+
+    @JSONField(name = "password")
+    private String password;
+
+    @JSONField(name = "leftmoney")
+    private double leftmoney;
+
+    @Basic
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -78,6 +87,36 @@ public class UserEntity {
         this.level = level;
     }
 
+    @Id
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "leftmoney")
+    public double getLeftmoney() {
+        return leftmoney;
+    }
+
+    public void setLeftmoney(double leftmoney) {
+        this.leftmoney = leftmoney;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,11 +126,13 @@ public class UserEntity {
                 email.equals(that.email) &&
                 phone.equals(that.phone) &&
                 name.equals(that.name) &&
-                addresses.equals(that.addresses);
+                addresses.equals(that.addresses) &&
+                username.equals(that.username) &&
+                password.equals(that.password);
     }
 
 //    @Override
 //    public int hashCode() {
-//        return Objects.hash(email, phone, name, addresses, level);
+//        return Objects.hash(email, phone, name, addresses, level, username, password);
 //    }
 }

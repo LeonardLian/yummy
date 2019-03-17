@@ -46,7 +46,7 @@
     </div>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     $(function () {
@@ -57,12 +57,13 @@
         var foodListJson = null;
         $.ajax({
             type: 'post',
-            dataType: 'json',
+            dataType: 'text',
             url: 'LoadFoodsOfCertainRestServlet',
             data: restCode,
             async: false,
             success: function (data) {
-                foodListJson = data;
+                //alert(data);
+                foodListJson = eval('('+data+')');
             },
             error: function (e) {
                 alert("LoadFoodsOfCertainRestServlet error");
@@ -71,6 +72,7 @@
         var foodid=[];
         var name=[];
         var num=[];
+
         for (var p in foodListJson) {
             foodid.push(foodListJson[p].foodid);
             name.push(foodListJson[p].name);
@@ -83,7 +85,7 @@
         }
 
         var resultStr=result.join(',');
-        document.cookie='foodname'+resultStr;
+        document.cookie='foodname='+resultStr;
 
     });
 
@@ -115,6 +117,7 @@
                 '</div>');
 
             var foodname=getcookie('foodname');
+            //alert(foodname);
             var arr=foodname.split(',');
 
             for(var p in arr){
@@ -138,6 +141,7 @@
             data:food,
             success:function (data) {
                 alert('发布成功');
+                location.reload();
             },
             error:function (e) {
                 alert('ReleaseFoodServlet error');
@@ -173,6 +177,7 @@
             data:foodpackage,
             success:function (data) {
                 alert('发布成功');
+                location.reload();
             },
             error:function (e) {
                 alert('ReleaseFoodpackageServlet error');

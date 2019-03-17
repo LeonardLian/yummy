@@ -4,6 +4,8 @@ import com.javaee.dao.RestaurantDao;
 import com.javaee.entity.RestaurantEntity;
 import com.javaee.service.RestaurantService;
 import com.javaee.utility.EntityUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -14,7 +16,10 @@ import java.util.List;
  */
 public class RestaurantServiceimpl implements RestaurantService {
 
-    private RestaurantDao restaurantDao;
+    private ApplicationContext applicationContext=
+            new ClassPathXmlApplicationContext("config.xml");
+
+    private RestaurantDao restaurantDao=(RestaurantDao)applicationContext.getBean("restaurantDao");
 
     //注册新餐厅
     public void addNewRestaurant(RestaurantEntity restaurant) {
@@ -64,11 +69,4 @@ public class RestaurantServiceimpl implements RestaurantService {
         return restaurantDao.getUncheckRestaurant();
     }
 
-    public void setRestaurantDao(RestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
-    }
-
-    public RestaurantDao getRestaurantDao() {
-        return restaurantDao;
-    }
 }

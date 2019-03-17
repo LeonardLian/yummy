@@ -19,23 +19,12 @@
 
         <property name="mappingResources">
             <list>
-                <value>hibernate/BankcardEntity.hbm.xml</value>
                 <value>hibernate/FoodEntity.hbm.xml</value>
                 <value>hibernate/FoodorderEntity.hbm.xml</value>
                 <value>hibernate/FoodpackageEntity.hbm.xml</value>
                 <value>hibernate/OrderstateEntity.hbm.xml</value>
                 <value>hibernate/RestaurantEntity.hbm.xml</value>
                 <value>hibernate/UserEntity.hbm.xml</value>
-                <value>classpath:hibernate/BankcardEntity.hbm.xml</value>
-                <value>classpath:hibernate/FoodEntity.hbm.xml</value>
-                <value>classpath:hibernate/FoodorderEntity.hbm.xml</value>
-                <value>classpath:hibernate/FoodpackageEntity.hbm.xml</value>
-                <value>classpath:hibernate/OrderstateEntity.hbm.xml</value>
-                <value>classpath:hibernate/RestaurantEntity.hbm.xml</value>
-                <value>classpath:hibernate/UserEntity.hbm.xml</value>
-                <value>classpath:hibernate/UserEntity.hbm.xml</value>
-                <value>classpath:hibernate/UserEntity.hbm.xml</value>
-                <value>classpath:hibernate/UserEntity.hbm.xml</value>
             </list>
         </property>
     </bean>

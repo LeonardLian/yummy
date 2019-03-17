@@ -13,257 +13,246 @@
     <schema id="7" parent="1" name="performance_schema"/>
     <schema id="8" parent="1" name="sys"/>
     <schema id="9" parent="1" name="user"/>
-    <table id="10" parent="2" name="bankcard"/>
-    <table id="11" parent="2" name="food"/>
-    <table id="12" parent="2" name="foodorder"/>
-    <table id="13" parent="2" name="foodpackage"/>
-    <table id="14" parent="2" name="orderstate"/>
-    <table id="15" parent="2" name="restaurant"/>
-    <table id="16" parent="2" name="user"/>
-    <column id="17" parent="10" name="cardid">
+    <table id="10" parent="2" name="food"/>
+    <table id="11" parent="2" name="foodorder"/>
+    <table id="12" parent="2" name="foodpackage"/>
+    <table id="13" parent="2" name="orderstate"/>
+    <table id="14" parent="2" name="restaurant"/>
+    <table id="15" parent="2" name="user"/>
+    <column id="16" parent="10" name="foodid">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="18" parent="10" name="cardcode">
-      <Position>3</Position>
-      <DataType>varchar(30)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="19" parent="10" name="money">
-      <Position>4</Position>
-      <DataType>float(8,2)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="20" parent="10" name="email">
+    <column id="17" parent="10" name="restCode">
       <Position>2</Position>
-      <DataType>varchar(50)|0</DataType>
+      <DataType>varchar(7)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="18" parent="10" name="price">
+      <Position>3</Position>
+      <DataType>float(6,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="19" parent="10" name="number">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="20" parent="10" name="name">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <key id="21" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>cardid</ColNames>
+      <ColNames>foodid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="22" parent="11" name="foodid">
+    <column id="22" parent="11" name="orderid">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
     <column id="23" parent="11" name="restCode">
-      <Position>2</Position>
-      <DataType>varchar(7)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="24" parent="11" name="price">
-      <Position>3</Position>
-      <DataType>float(6,2)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="25" parent="11" name="number">
-      <Position>4</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="26" parent="11" name="name">
-      <Position>5</Position>
-      <DataType>varchar(100)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="27" parent="11" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>foodid</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="28" parent="12" name="orderid">
-      <Position>1</Position>
-      <DataType>int(10) unsigned|0</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-    </column>
-    <column id="29" parent="12" name="restCode">
       <Position>3</Position>
       <DataType>varchar(7)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="30" parent="12" name="useraddress">
+    <column id="24" parent="11" name="useraddress">
       <Position>4</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="31" parent="12" name="packageids">
+    <column id="25" parent="11" name="packageids">
       <Position>5</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="32" parent="12" name="packagenums">
+    <column id="26" parent="11" name="packagenums">
       <Position>6</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="12" name="foodCodes">
+    <column id="27" parent="11" name="foodCodes">
       <Position>7</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="12" name="foodNums">
+    <column id="28" parent="11" name="foodNums">
       <Position>8</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="35" parent="12" name="totalprice">
+    <column id="29" parent="11" name="totalprice">
       <Position>9</Position>
       <DataType>float(6,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="12" name="buildtime">
+    <column id="30" parent="11" name="buildtime">
       <Position>10</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="12" name="email">
+    <column id="31" parent="11" name="username">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="38" parent="12" name="PRIMARY">
+    <key id="32" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>orderid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="39" parent="13" name="packageid">
+    <column id="33" parent="12" name="packageid">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="40" parent="13" name="restCode">
+    <column id="34" parent="12" name="restCode">
       <Position>2</Position>
       <DataType>varchar(7)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="13" name="name">
+    <column id="35" parent="12" name="name">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="13" name="foodCodes">
+    <column id="36" parent="12" name="foodCodes">
       <Position>4</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="43" parent="13" name="foodNums">
+    <column id="37" parent="12" name="foodNums">
       <Position>5</Position>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="44" parent="13" name="price">
+    <column id="38" parent="12" name="price">
       <Position>6</Position>
       <DataType>float(6,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="45" parent="13" name="PRIMARY">
+    <key id="39" parent="12" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>packageid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="46" parent="14" name="orderid">
+    <column id="40" parent="13" name="orderid">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="47" parent="14" name="orderstate">
+    <column id="41" parent="13" name="orderstate">
       <Position>2</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="48" parent="14" name="paytime">
+    <column id="42" parent="13" name="paytime">
       <Position>3</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="49" parent="14" name="canceltime">
+    <column id="43" parent="13" name="canceltime">
       <Position>4</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="50" parent="14" name="arrivetime">
+    <column id="44" parent="13" name="arrivetime">
       <Position>5</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="51" parent="14" name="PRIMARY">
+    <key id="45" parent="13" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>orderid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="52" parent="15" name="code">
+    <column id="46" parent="14" name="code">
       <Position>1</Position>
       <DataType>varchar(7)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="53" parent="15" name="password">
+    <column id="47" parent="14" name="password">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="54" parent="15" name="address">
+    <column id="48" parent="14" name="address">
       <Position>3</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="15" name="kind">
+    <column id="49" parent="14" name="kind">
       <Position>4</Position>
       <DataType>varchar(40)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="56" parent="15" name="state">
+    <column id="50" parent="14" name="state">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="57" parent="15" name="name">
+    <column id="51" parent="14" name="name">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="58" parent="15" name="PRIMARY">
+    <key id="52" parent="14" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>code</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="59" parent="16" name="email">
+    <column id="53" parent="15" name="email">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="60" parent="16" name="phone">
+    <column id="54" parent="15" name="phone">
       <Position>2</Position>
       <DataType>varchar(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="61" parent="16" name="name">
+    <column id="55" parent="15" name="name">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="62" parent="16" name="addresses">
+    <column id="56" parent="15" name="addresses">
       <Position>4</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="63" parent="16" name="level">
+    <column id="57" parent="15" name="level">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="64" parent="16" name="PRIMARY">
+    <column id="58" parent="15" name="username">
+      <Position>6</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="59" parent="15" name="password">
+      <Position>7</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="60" parent="15" name="leftmoney">
+      <Position>8</Position>
+      <DataType>float|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;1000&apos;</DefaultExpression>
+    </column>
+    <key id="61" parent="15" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>email</ColNames>
+      <ColNames>username</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

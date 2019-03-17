@@ -1,12 +1,14 @@
 package com.javaee.service.impl;
 
-import com.javaee.dao.BankcardDao;
 import com.javaee.dao.FoodorderDao;
 import com.javaee.dao.OrderstateDao;
+import com.javaee.dao.UserDao;
 import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.OrderstateEntity;
 import com.javaee.service.FoodorderService;
 import com.javaee.utility.TimeUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -17,9 +19,12 @@ import java.util.List;
  */
 public class FoodorderServiceImpl implements FoodorderService{
 
-    private FoodorderDao foodorderDao;
-    private OrderstateDao orderstateDao;
-    private BankcardDao bankcardDao;
+    private ApplicationContext applicationContext=
+            new ClassPathXmlApplicationContext("config.xml");
+
+    private FoodorderDao foodorderDao=(FoodorderDao) applicationContext.getBean("foodorderDao");
+    private OrderstateDao orderstateDao=(OrderstateDao)applicationContext.getBean("orderstateDao");
+    private UserDao userDao=(UserDao)applicationContext.getBean("userDao");
 
     //检索特定订单信息
     public FoodorderEntity findCertainFoodorderByOrderId(int orderId) {
@@ -38,18 +43,18 @@ public class FoodorderServiceImpl implements FoodorderService{
     }
 
     //支付订单
-    public void payForOrder(int orderId, String email) {
+    public void payForOrder(int orderId, String username) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
-        bankcardDao.updateBankcard(email,price,0);
+        userDao.changeMoney(username,price,0);
         orderstateDao.updateOrderstate(orderId,"已支付", TimeUtils.getCurrentTime());
     }
 
     //退订订单
-    public void cancelOrder(int orderId, String email) {
+    public void cancelOrder(int orderId, String username) {
         FoodorderEntity order=foodorderDao.retrieveOrderById(orderId);
         double price=order.getTotalprice();
-        bankcardDao.updateBankcard(email,price,1);
+        userDao.changeMoney(username,price,1);
         orderstateDao.updateOrderstate(orderId,"已退订",TimeUtils.getCurrentTime());
     }
 
@@ -69,8 +74,8 @@ public class FoodorderServiceImpl implements FoodorderService{
     }
 
     //得到特定用户的所有订单
-    public List getAllOrderOfOneUser(String email) {
-        return foodorderDao.getAllOrderOfOneUser(email);
+    public List getAllOrderOfOneUser(String username) {
+        return foodorderDao.getAllOrderOfOneUser(username);
     }
 
     //得到特定餐厅的所有订单
@@ -78,27 +83,4 @@ public class FoodorderServiceImpl implements FoodorderService{
         return foodorderDao.getAllOrderOfOneRest(restCode);
     }
 
-    public void setOrderstateDao(OrderstateDao orderstateDao) {
-        this.orderstateDao = orderstateDao;
-    }
-
-    public OrderstateDao getOrderstateDao() {
-        return orderstateDao;
-    }
-
-    public void setBankcardDao(BankcardDao bankcardDao) {
-        this.bankcardDao = bankcardDao;
-    }
-
-    public BankcardDao getBankcardDao() {
-        return bankcardDao;
-    }
-
-    public FoodorderDao getFoodorderDao() {
-        return foodorderDao;
-    }
-
-    public void setFoodorderDao(FoodorderDao foodorderDao) {
-        this.foodorderDao = foodorderDao;
-    }
 }

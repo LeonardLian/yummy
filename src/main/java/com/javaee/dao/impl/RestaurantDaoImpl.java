@@ -59,7 +59,7 @@ public class RestaurantDaoImpl extends HibernateDaoSupport implements Restaurant
     }
 
     public List getUncheckRestaurant() {
-        String hql="from RestaurantEntity where state=0";
+        String hql="from RestaurantEntity where state = 20";
         return this.getHibernateTemplate().find(hql);
     }
 }

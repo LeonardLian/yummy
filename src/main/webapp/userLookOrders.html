@@ -8,22 +8,23 @@
 <ul id="orderList">
 </ul>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
     $(function () {
-        var email=getcookie('email');
-        var emailOb=new UserEmail(email);
+        var username=getcookie('username');
+        var usernameOb=new Username(username);
 
         $.ajax({
             type:'post',
-            dataType:'json',
+            dataType:'text',
             url:'LoadFoodorderOfCertainUserServlet',
-            data:emailOb,
+            data:usernameOb,
             success:function (data) {
-                for(var p in data){
-                    var orderid=data[p].orderid;
-                    var buildtime=data[p].buildtime;
+                var dta=eval('('+data+')');
+                for(var p in dta){
+                    var orderid=dta[p].orderid;
+                    var buildtime=dta[p].buildtime;
                     var url='/userHandleCertainOrder.html?orderid='+orderid;
                     $('#orderList').append('<li><div><a href="'+url+'">'+orderid+'</a></div><div>'+buildtime+'</div></li>');
                 }
@@ -34,8 +35,8 @@
         });
     });
 
-    function UserEmail(email) {
-        this.email=email;
+    function Username(username) {
+        this.username=username;
     }
 
 </script>

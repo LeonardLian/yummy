@@ -30,11 +30,15 @@ public class SignInRestaurantServlet extends HttpServlet{
         String code=req.getParameter("code");
         String password=req.getParameter("password");
 
+        System.out.println(code);
+        System.out.println(password);
+
         RestaurantService restaurantService=new RestaurantServiceimpl();
         boolean result=restaurantService.judgeRestaurantPassword(code,password);
 
         int checkResult=restaurantService.getCheckResult(code);
 
+        resp.setCharacterEncoding("utf-8");
         if(result){
             if (checkResult==0){
                 resp.getWriter().print("0");

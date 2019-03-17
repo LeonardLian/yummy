@@ -31,6 +31,7 @@ public class OrderOnRoadServlet extends HttpServlet {
         FoodorderService foodorderService=new FoodorderServiceImpl();
         foodorderService.OnRoadForOrder(orderid);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

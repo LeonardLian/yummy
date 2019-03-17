@@ -4,12 +4,14 @@
       <w>arrivetime</w>
       <w>buildtime</w>
       <w>canceltime</w>
+      <w>emailcode</w>
       <w>foodarr</w>
       <w>foodcodelist</w>
       <w>foodnum</w>
       <w>foodnumlist</w>
       <w>foodorder</w>
       <w>foodpackage</w>
+      <w>leftmoney</w>
       <w>lookrest</w>
       <w>mainpage</w>
       <w>nums</w>

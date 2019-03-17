@@ -29,10 +29,12 @@ public class LoadRestaurantListServlet extends HttpServlet{
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RestaurantService restaurantService=new RestaurantServiceimpl();
-        List<RestaurantEntity> restaurantList=restaurantService.getAllRestaurantList();
+        List restaurantList=restaurantService.getAllRestaurantList();
 
-        String json= JSON.toJSONString(restaurantList);
+        String json = JSON.toJSONString(restaurantList);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
+
     }
 }

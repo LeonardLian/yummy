@@ -28,12 +28,14 @@ public class LoadCertainOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
 
-        int orderId=Integer.parseInt(req.getParameter("orderId"));
+        int orderId=Integer.parseInt(req.getParameter("orderid"));
 
         FoodorderService foodorderService=new FoodorderServiceImpl();
         FoodorderEntity foodorderEntity=foodorderService.findCertainFoodorderByOrderId(orderId);
 
         String json= JSON.toJSONString(foodorderEntity);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

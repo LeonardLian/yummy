@@ -32,7 +32,7 @@
     </div>
 </div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.js"></script>
 <script src="utils.js"></script>
 <script>
 
@@ -45,12 +45,13 @@
         var foodListJson=null;
         $.ajax({
             type:'post',
-            dataType:'json',
+            dataType:'text',
             url:'LoadFoodsOfCertainRestServlet',
             data:restCode,
             async:false,
             success:function (data) {
-                foodListJson=data;
+                document.cookie='foodListJson='+data;
+                foodListJson=eval('('+data+')');
             },
             error:function (e) {
                 alert("LoadFoodsOfCertainRestServlet error");
@@ -69,12 +70,13 @@
         var foodpackageListJson=null;
         $.ajax({
             type:'post',
-            dataType:'json',
+            dataType:'text',
             url:'LoadFoodpackageOfCertainRestServlet',
             data:restCode,
             async:false,
             success:function (data) {
-                foodpackageListJson=data;
+                document.cookie='foodpackageListJson='+data;
+                foodpackageListJson=eval('('+data+')');
             },
             error:function (e) {
                 alert("LoadFoodpackageOfCertainRestServlet error");
@@ -89,10 +91,8 @@
             $('#packageSelect').append('<option value="'+packagename+'">'+packagename+'</option>');
             $('#foodPackageList').append('<li><div>'+packageid+','+packagename+','+foodCodes+','+foodNums+','+packageprice+'</div></li>')
         }
-
-        document.cookie='foodListJson='+foodListJson;
-        document.cookie='foodpackageListJson='+foodpackageListJson;
     });
+
 
     function generateFoodOption(){
         $('#foodarr').empty();
@@ -107,7 +107,7 @@
                 '<input id="'+numid+'" type="number" placeholder="数量">' +
                 '</div>');
 
-            var foodList=getcookie('foodListJson');
+            var foodList=eval('('+getcookie('foodListJson')+')');
 
             for(var p in foodList){
                 var food=foodList[p].foodid+':'+foodList[p].name+':'+foodList[p].price;
@@ -129,7 +129,7 @@
                 '<input id="'+numid+'" type="number" placeholder="数量">' +
                 '</div>');
 
-            var packageList=getcookie('foodpackageListJson');
+            var packageList=eval('('+getcookie('foodpackageListJson')+')');
 
             for(var p in packageList){
                 var package=packageList[p].packageid+':'+packageList[p].name+':'+packageList[p].price;
@@ -142,7 +142,7 @@
 
     function callOrder() {
 
-        var email=getcookie('email');
+        var username=getcookie('username');
         var restCode=getRestCode();
         var useraddress=$('#address').val();
 
@@ -174,7 +174,7 @@
             var list1=($('#package'+j).find('option:selected').text()).split(':');
             packagecodelist.push(list1[0]);
 
-            var number1=$('#packagenum'+i).val();
+            var number1=$('#packagenum'+j).val();
             packagenumlist.push(number1);
 
             totalprice=totalprice+list1[2]*number1;
@@ -185,8 +185,7 @@
         //////////////
         //override 得到(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice)
 
-
-        var foodorder=new Foodorder(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice);
+        var foodorder=new Foodorder(username,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice);
 
         $.ajax({
             type:'post',
@@ -194,10 +193,11 @@
             url:'OrderCallServlet',
             data:foodorder,
             success:function (data) {
-                alert(data);
+                alert("下单成功");
+                window.location.href='/userMainpage.html';
             },
             error:function (e) {
-                alert("LoadFoodsOfCertainRestServlet error");
+                alert("OrderCallServlet error");
             }
         });
     }
@@ -206,8 +206,8 @@
         this.restCode=restCode;
     }
 
-    function Foodorder(email,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice) {
-        this.email=email;
+    function Foodorder(username,restCode,useraddress,packageids,packagenums,foodCodes,foodNums,totalprice) {
+        this.username=username;
         this.restCode=restCode;
         this.useraddress=useraddress;
         this.packageids=packageids;

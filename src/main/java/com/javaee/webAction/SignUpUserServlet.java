@@ -1,5 +1,7 @@
 package com.javaee.webAction;
 
+import com.javaee.entity.UserEntity;
+import com.javaee.service.UserService;
 import com.javaee.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -12,10 +14,10 @@ import java.io.IOException;
 /**
  * @author: pis
  * @description: good good study
- * @date: create in 下午5:07 2019/3/14
+ * @date: create in 下午8:15 2019/3/16
  */
-@WebServlet("/ModifyUserServlet")
-public class ModifyUserServlet extends HttpServlet {
+@WebServlet("/SignUpUserServlet")
+public class SignUpUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -26,11 +28,15 @@ public class ModifyUserServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
 
         String username=req.getParameter("username");
+        String password=req.getParameter("password");
+        String email=req.getParameter("email");
         String phone=req.getParameter("phone");
         String name=req.getParameter("name");
-        String address=req.getParameter("address");
+        String addresses=req.getParameter("addresses");
 
-        new UserServiceImpl().updateUser(username,phone,name,address);
+        UserService userService=new UserServiceImpl();
+
+        userService.addUser(username,password,email,phone,name,addresses);
 
         resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");

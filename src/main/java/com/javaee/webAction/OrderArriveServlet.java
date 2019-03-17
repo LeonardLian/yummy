@@ -31,6 +31,7 @@ public class OrderArriveServlet extends HttpServlet {
         FoodorderService foodorderService=new FoodorderServiceImpl();
         foodorderService.arriveForOrder(orderid);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

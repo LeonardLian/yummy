@@ -30,10 +30,11 @@ public class LoadFoodsOfCertainRestServlet extends HttpServlet{
 
         String restCode=req.getParameter("restCode");
         FoodService foodService=new FoodServiceImpl();
-        List<FoodEntity> foodList=foodService.getAllFoodOfOneRestaurant(restCode);
+        List foodList=foodService.getAllFoodOfOneRestaurant(restCode);
 
         String json= JSON.toJSONString(foodList);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
 
     }

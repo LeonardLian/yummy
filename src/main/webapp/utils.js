@@ -29,7 +29,7 @@ function outOfTime(di) {
     var dateBegin=new Date(di.replace(/-/g,"/"));
     var dateEnd=new Date();
     var dateDiff=dateEnd.getTime()-dateBegin.getTime();
-    if (dateDiff>120000){
+    if (dateDiff>900000){
         return true;
     }
     else {

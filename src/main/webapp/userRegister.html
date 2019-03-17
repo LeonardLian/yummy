@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+<div>
+    <div>
+        <input id="username" placeholder="用户名" type="text">
+    </div>
+    <div>
+        <input id="password" placeholder="密码" type="password">
+    </div>
+    <div>
+        <input id="email" placeholder="邮箱" type="text">
+        <input id="emailCode" placeholder="邮箱验证码" type="text">
+        <button id="codeGet" onclick="sendEmail()">获取验证码</button>
+    </div>
+    <div>
+        <input id="phone" placeholder="电话" type="number">
+    </div>
+    <div>
+        <input id="name" placeholder="姓名" type="text">
+    </div>
+    <div>
+        <input id="addresses" placeholder="地址" type="text">
+    </div>
+    <div>
+        <button onclick="registerUser()">注册</button>
+        <button onclick="cancelit()">取消</button>
+    </div>
+</div>
+</body>
+<script src="jquery.js"></script>
+<script src="utils.js"></script>
+<script>
+    function sendEmail() {
+        var email=$('#email').val();
+        var emailOb=new EmailOb(email);
+        //var emailJson=JSON.stringify(emailOb);
+
+        $.ajax({
+            type:'post',
+            dataType:'text',
+            url:'EmailServlet',
+            data:emailOb,
+            success: function(msg){
+                //alert(msg.foodid);
+                document.cookie="emailcode="+msg;
+                document.cookie="email="+email;
+                alert("验证码已发送");
+            },
+            error:function (error) {
+                alert('EmailServlet error');
+            }
+        });
+    }
+
+    function registerUser() {
+        var emailcode=getcookie('emailcode');
+        var userEmail=getcookie('email');
+
+        var email=$('#email').val();
+        var inputCode=$('#emailCode').val();
+
+        if((userEmail==email)&&(emailcode==inputCode)){
+            var username=$('#username').val();
+            var password=$('#password').val();
+            var phone=$('#phone').val();
+            var name=$('#name').val();
+            var addresses=$('#addresses').val();
+
+            var user=new User(username,password,email,phone,name,addresses);
+
+            $.ajax({
+                type:'post',
+                dataType:'text',
+                url:'SignUpUserServlet',
+                data:user,
+                success:function (data) {
+                    alert("注册成功");
+                    window.location.href='/login.html';
+                },
+                error:function (e) {
+                    alert('SignUpUserServlet error');
+                }
+            });
+
+        }
+        else {
+            alert("验证码错误")
+        }
+    }
+
+    function cancelit() {
+        window.location.href='/login.html';
+    }
+
+
+    function User(username,password,email,phone,name,addresses) {
+        this.username=username;
+        this.password=password;
+        this.email=email;
+        this.phone=phone;
+        this.name=name;
+        this.addresses=addresses;
+    }
+
+    function EmailOb(email) {
+        this.email=email;
+    }
+</script>
+</html>

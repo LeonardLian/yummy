@@ -34,6 +34,8 @@ public class LoadCertainOrderStateServlet extends HttpServlet {
         OrderstateEntity orderstateEntity=foodorderService.findCertainOrderstateByOrderId(orderid);
 
         String json = JSON.toJSONString(orderstateEntity);
+
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print(json);
     }
 }

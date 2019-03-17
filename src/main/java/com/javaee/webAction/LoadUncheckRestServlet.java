@@ -29,7 +29,13 @@ public class LoadUncheckRestServlet extends HttpServlet {
         RestaurantService restaurantService=new RestaurantServiceimpl();
 
         List list=restaurantService.getUncheckRest();
+        System.out.println(list.size());
+
         String json= JSON.toJSONString(list);
+        System.out.println(json);
+
+        resp.setCharacterEncoding("utf-8");
+
         resp.getWriter().print(json);
     }
 }

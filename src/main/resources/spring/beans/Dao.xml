@@ -21,9 +21,6 @@
     <bean id="userDao" class="com.javaee.dao.impl.UserDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="bankcardDao" class="com.javaee.dao.impl.BankcardDaoImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 
     <bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />

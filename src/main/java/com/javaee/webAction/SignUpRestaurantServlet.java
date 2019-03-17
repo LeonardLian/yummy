@@ -50,6 +50,7 @@ public class SignUpRestaurantServlet extends HttpServlet {
 
         restaurantService.addNewRestaurant(restaurantEntity);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }

@@ -7,6 +7,8 @@ import com.javaee.entity.FoodEntity;
 import com.javaee.entity.FoodorderEntity;
 import com.javaee.entity.FoodpackageEntity;
 import com.javaee.service.FoodService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
@@ -17,9 +19,12 @@ import java.util.List;
  */
 public class FoodServiceImpl implements FoodService{
 
-    FoodDao foodDao;
-    FoodpackageDao foodpackageDao;
-    RestaurantDao restaurantDao;
+    private ApplicationContext applicationContext=
+            new ClassPathXmlApplicationContext("config.xml");
+
+    private FoodDao foodDao=(FoodDao)applicationContext.getBean("foodDao");
+    private FoodpackageDao foodpackageDao=(FoodpackageDao)applicationContext.getBean("foodpackageDao");
+    private RestaurantDao restaurantDao=(RestaurantDao)applicationContext.getBean("restaurantDao");
 
     //发布新菜品
     public void releaseFood(FoodEntity food) {
@@ -28,10 +33,10 @@ public class FoodServiceImpl implements FoodService{
 
     //订单支付或退订后，更改相关菜品数量
     public void changeFoodNum(FoodorderEntity foodorder, int state) {
-        String[] packageIds=(foodorder.getPackageids()).split(",");
-        String[] packageNums=(foodorder.getPackagenums()).split(",");
-        String[] foodCodes=(foodorder.getFoodCodes()).split(",");
-        String[] foodNums=(foodorder.getFoodNums()).split(",");
+        String[] packageIds=(foodorder.getPackageids()).split(" ");
+        String[] packageNums=(foodorder.getPackagenums()).split(" ");
+        String[] foodCodes=(foodorder.getFoodCodes()).split(" ");
+        String[] foodNums=(foodorder.getFoodNums()).split(" ");
 
         for(int i=0;i<foodCodes.length;i++){
             int foodId=Integer.valueOf(foodCodes[i]);
@@ -44,8 +49,8 @@ public class FoodServiceImpl implements FoodService{
             int packageNum=Integer.valueOf(packageNums[i]);
 
             FoodpackageEntity foodpackage=foodpackageDao.retrievePackageByPackageId(packageId);
-            String[] packageFoodCodes=foodpackage.getFoodCodes().split(",");
-            String[] packageFoodNums=foodpackage.getFoodNums().split(",");
+            String[] packageFoodCodes=foodpackage.getFoodCodes().split(" ");
+            String[] packageFoodNums=foodpackage.getFoodNums().split(" ");
 
             for (int j=0;j<packageFoodCodes.length;j++) {
                 int foodId=Integer.valueOf(packageFoodCodes[j]);
@@ -60,30 +65,4 @@ public class FoodServiceImpl implements FoodService{
         return restaurantDao.getAllFoodOfOneRestaurant(code);
     }
 
-
-
-
-    public RestaurantDao getRestaurantDao() {
-        return restaurantDao;
-    }
-
-    public void setRestaurantDao(RestaurantDao restaurantDao) {
-        this.restaurantDao = restaurantDao;
-    }
-
-    public FoodpackageDao getFoodpackageDao() {
-        return foodpackageDao;
-    }
-
-    public void setFoodpackageDao(FoodpackageDao foodpackageDao) {
-        this.foodpackageDao = foodpackageDao;
-    }
-
-    public void setFoodDao(FoodDao foodDao) {
-        this.foodDao = foodDao;
-    }
-
-    public FoodDao getFoodDao() {
-        return foodDao;
-    }
 }

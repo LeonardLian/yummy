@@ -32,6 +32,7 @@ public class CheckRestaurant extends HttpServlet {
         RestaurantService restaurantService=new RestaurantServiceimpl();
         restaurantService.checkRestaurant(restCode,result);
 
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().print("success");
     }
 }
